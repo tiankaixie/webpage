@@ -1,122 +1,68 @@
-Glad you made it here! This is a customizable, feature-rich :link[Astro]{id=withastro/astro} theme for blog and portfolio creation, inspired by the minimalist style of :link[antfu.me]{link=https://antfu.me/ imageUrl=https://antfu.me/favicon.svg}. The design has been refined and its functionality expanded for greater flexibility.
+  <div class="flex justify-center">
+    <img src="/TKsm.png" class="rounded-full w-64 h-64 object-cover" alt="TK's profile picture" />
+  </div>
 
-This live demo will guide you through setup and customization, offering helpful insights along the way. Enjoy exploring all the features this theme provides! ✨
-
-**Optimized Infrastructure**
-
-- Zero UI Framework
-- [SEO-friendly](./blog/faqs-and-known-issues/#about-seo-and-accessibility)
-- Auto-generated RSS Feed
-- Support for [Subpath Deployment](./blog/basic-configuration/#configuring-site)
-- Optimized Local Image Handling
-- VS Code Snippets for Quick Coding
-- Well-organized [Project Structure](./blog/project-structure/)
-- Outstanding [Lighthouse Performance](./blog/faqs-and-known-issues/#lighthouse-scores)
-
-**Content Management**
-
-- Type Safety
-- Markdown & MDX Support
-- KaTeX Math Integration
-- [Dynamic OG Image Generation](./blog/about-open-graph-images/)
-- [Callouts (Alerts / Admonitions)](./blog/markdown-mdx-extended-features/#callouts-alerts--admonitions)
-- [Directive Sugar](./blog/markdown-mdx-extended-features/#image-caption--link) for Both Markdown/MDX
-- [Code Syntax Highlighting & Annotations](./blog/markdown-mdx-extended-features/#fully-featured-code-blocks)
-- Customizable Animated Backgrounds (Take a look around!)
-- [Showcase Your GitHub Releases and PRs](./blog/customizing-github-activity-pages)
-
-**User Experience**
-
-- Responsive Layout
-- Full-platform TOC support
-- Light & Dark Modes Toggle
-- Smooth View Transitions
-- Loading Progress Indicator
-- [Image Zoom](./blog/faqs-and-known-issues/#image-zoom) Preview
-- [Search Functionality](./blog/faqs-and-known-issues/#search-functionality)
-- [Accessibility Enhancements](./blog/faqs-and-known-issues/#about-seo-and-accessibility)
-- Social Media Sharing
-- Keyboard-Friendly
-
-> Preparing to upgrade to Astro 5 with [more features](https://github.com/users/lin-stephanie/projects/4)! 🚀
-
----
-
-<p>
-  Visit the theme's
-  <a
-    class="inline-block ml-1.5 op-75 hover:op-100"
-    href="https://github.com/lin-stephanie/astro-antfustyle-theme"
-    target="_blank"
-    aria-label="AntfuStyle on GitHub (external link)"
-  >
-    <span i-simple-icons-github></span>
-    GitHub repo
-  </a>
-</p>
-
-<p>
-  <span class="inline-block mr-1.5 mb-2">Find me on</span>
+<p class="flex justify-center">
   <span class="inline-flex flex-wrap gap-2 op-75 hover:op-100">
+    <a
+      href="https://scholar.google.com"
+      target="_blank"
+      aria-label="Find me on Google Scholar (external link)"
+    >
+      <span i-simple-icons-googlescholar></span>
+    </a>
     <a
       href="https://github.com/lin-stephanie/astro-antfustyle-theme"
       target="_blank"
       aria-label="Find me on GitHub (external link)"
     >
-      <span i-simple-icons-github></span> GitHub
+      <span i-simple-icons-github></span>
     </a>
     <a
       href="https://github.com/lin-stephanie/astro-antfustyle-theme"
       target="_blank"
       aria-label="Find me on Twitter (external link)"
     >
-      <span i-ri-twitter-x-fill></span> Twitter
+      <span i-ri-twitter-x-fill></span>
     </a>
     <a
       href="https://github.com/lin-stephanie/astro-antfustyle-theme"
       target="_blank"
       aria-label="Find me on Instagram (external link)"
     >
-      <span i-simple-icons-instagram></span> Instagram
+      <span i-simple-icons-instagram></span>
     </a>
     <a
       href="https://github.com/lin-stephanie/astro-antfustyle-theme"
       target="_blank"
-      aria-label="Find me on Mastodon (external link)"
+      aria-label="Find me on LinkedIn (external link)"
     >
-      <span i-simple-icons-mastodon></span> Mastodon
-    </a>
-    <a
-      href="https://github.com/lin-stephanie/astro-antfustyle-theme"
-      target="_blank"
-      aria-label="Find me on YouTube (external link)"
-    >
-      <span i-simple-icons-youtube></span> YouTube
+      <span i-simple-icons-linkedin></span>
     </a>
   </span>
 </p>
 
----
 
-If you find this theme helpful, consider supporting the project maintainer or the style designer. Your support means more than you know. Thank you! ❤️
+**Hey, I am TK**
+
+I am a AI researcher and developer dedicated to bridging the gap between virtual and physical realms through artificial intelligence.
+With a clear vision of reducing information chaos in our increasingly digital world, I strive to develop solutions that seamlessly integrate AI into everyday life. My mission is to harness the power of artificial intelligence to enhance human experiences, making technology more accessible and meaningful while helping people navigate the complexities of our information-rich age with greater ease and purpose. Through my work, I aim to create a future where technology serves as a natural extension of human capability, ultimately improving quality of life for all.
+
+
+
+
+<!-- --- -->
+
+<!-- If you find my work helpful, please consider supporting me. Thank you! ❤️
 
 <div class="flex flex-wrap gap-4">
   <a
     class="btn-rose"
     href="https://github.com/sponsors/lin-stephanie"
     target="_blank"
-    aria-label="Support Stephanie Lin (external link)"
+    aria-label="Support me (external link)"
   >
     <div class="i-ph-heart-duotone transition-all ease-out duration-200"></div>
-    Support Stephanie Lin (Maintainer)
+    Support me
   </a>
-  <a
-    class="btn-yellow"
-    href="https://github.com/sponsors/antfu"
-    target="_blank"
-    aria-label="Support Anthony Fu (external link)"
-  >
-    <div class="i-ph-lightning-duotone transition-all ease-out duration-200"></div>
-    Support Anthony Fu (Designer)
-  </a>
-</div>
+</div> -->
