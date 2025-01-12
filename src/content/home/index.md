@@ -5,39 +5,46 @@
 <p class="flex justify-center">
   <span class="inline-flex flex-wrap gap-2 op-75 hover:op-100">
     <a
-      href="https://scholar.google.com"
+      href="https://scholar.google.com/citations?user=iGRSrJUAAAAJ&hl=en&inst=1960582506653781529&oi=ao"
       target="_blank"
       aria-label="Find me on Google Scholar (external link)"
     >
       <span i-simple-icons-googlescholar></span>
     </a>
     <a
-      href="https://github.com/lin-stephanie/astro-antfustyle-theme"
+      href="https://github.com/tiankaixie"
       target="_blank"
       aria-label="Find me on GitHub (external link)"
     >
       <span i-simple-icons-github></span>
     </a>
     <a
-      href="https://github.com/lin-stephanie/astro-antfustyle-theme"
+      href="https://x.com/tiankaixie"
       target="_blank"
       aria-label="Find me on Twitter (external link)"
     >
       <span i-ri-twitter-x-fill></span>
     </a>
     <a
-      href="https://github.com/lin-stephanie/astro-antfustyle-theme"
+      href="https://www.instagram.com/tiankaixie"
       target="_blank"
       aria-label="Find me on Instagram (external link)"
     >
       <span i-simple-icons-instagram></span>
     </a>
     <a
-      href="https://github.com/lin-stephanie/astro-antfustyle-theme"
+      href="https://www.linkedin.com/in/tiankaixie"
       target="_blank"
       aria-label="Find me on LinkedIn (external link)"
     >
       <span i-simple-icons-linkedin></span>
+    </a>
+    <a
+      href="/cv.pdf"
+      target="_blank"
+      aria-label="View my CV (external link)"
+    >
+      <span i-ri-file-pdf2-fill></span>
     </a>
   </span>
 </p>
