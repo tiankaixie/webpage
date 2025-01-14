@@ -3,16 +3,42 @@
   "projects": {
     "Research": [
       {
-        "name": "LossLens",
-        "link": "https://ieeexplore.ieee.org/abstract/document/10804049",
+        "name": "loss-lens",
+        "link": "https://github.com/Vis4SciML/loss-lens",
         "desc": "Diagnostics for Machine Learning through Loss Landscape Visual Analytics",
-        "icon": "i-devicon-astro"
+        "icon": "i-devicon:nextjs"
       },
       {
-        "name": "prettier-plugin-astro",
-        "link": "https://github.com/withastro/prettier-plugin-astro",
-        "desc": "Prettier plugin for Astro files",
-        "icon": "i-logos-prettier"
+        "name": "fairrankvis",
+        "link": "https://github.com/tiankaixie/fairrankvis",
+        "desc": "A Visual Analytics Framework for Exploring Algorithmic Fairness in Graph Mining Models",
+        "icon": "i-devicon:redux"
+      },
+      {
+        "name": "graph-sensitivity-auditing",
+        "link": "https://github.com/tiankaixie/auditing-sensitivity-graph-ranking",
+        "desc": "Auditing the Sensitivity of Graph-based Ranking with Visual Analytics",
+        "icon": "i-devicon:redux"
+      },
+      {
+        "name": "visual-analytics-adversarial",
+        "link": "https://github.com/VADERASU/visual-analytics-adversarial-attacks",
+        "desc": "Visual Analytics for Adversarial Attacks on Graph Neural Networks",
+        "icon": "i-devicon:react"
+      }
+    ],
+    "Workflow": [
+      {
+        "name": "fui.nvim",
+        "link": "https://github.com/tiankaixie/fui.nvim",
+        "desc": "Futuristic color scheme for neovim",
+        "icon": "i-devicon:neovim"
+      },
+      {
+        "name": "dotfiles",
+        "link": "https://github.com/tiankaixie/dotfiles",
+        "desc": "My dotfiles for neovim and zsh",
+        "icon": "i-devicon:archlinux"
       }
     ]
   }

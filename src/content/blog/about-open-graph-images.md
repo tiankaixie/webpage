@@ -1,93 +1,156 @@
 ---
-title: About Open Graph Images
-description: How to configure OG images in the Astro AntfuStyle Theme
-pubDate: 2020-01-02
-lastModDate: ''
+title: Setting up Remote Server Development Environment
+description: A comprehensive guide to setting up a remote development environment on Ubuntu LTS that enables development from any device. This setup eliminates dependencies on local operating systems and hardware limitations while providing a consistent development experience
+pubDate: 2024-10-13
+lastModDate: 2025-01-14
 toc: true
 share: true
 ogImage: true
 ---
 
-This post explains how to configure Open Graph (OG) images in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme).
+This is a guide to setup remote server development enviroment (Ubuntu LTS) use the following:
 
-## What Are Open Graph Images?
-
-OG images, short for Open Graph images, are metadata images used by social media platforms to visually represent a webpage when shared. Originating from Facebook's [Open Graph protocol](https://ogp.me/),  they make shared content more engaging.
-
-Platforms like Facebook, Twitter, LinkedIn, and Discord use these images. While Twitter uses its own protocol ([Twitter Cards](https://developer.x.com/en/docs/x-for-websites/cards/overview/abouts-cards)), "OG image" is often used as a general term for these images.
-
-## Configuring OG Images
-
-There are three ways to configure OG images in this theme, listed by priority:
-
-**Method 1**: Specify the `ogImage` field in the Markdown/MDX frontmatter with a custom image, which should be saved in `/public/og-images/`. For example:
-
-```md title='src/content/blog/about-open-graph-images.md' {5}
----
-title: About Open Graph Images
-
-# The specified OG image must be saved: `public/og-images/specified-og-image.png`
-ogImage: specified-og-image.png
----
+```
+1. zsh
+2. Tmux
+3. Neovim
+4. Docker
 ```
 
-> [!warning]
-> If the image isn’t found in `/public/og-images/`, a fallback `og-image.png` will be used.
+The goal of this setup is to get rid of all dependencies that are caused by the end operating system, and hardware limitation. As long as you have a Linux-based machine, you can basically use any device to get access everything on that machine and start developing. This way, you can even use ipad to develop without any overheads of workflows such as IDEs, keymappings, environments, etc. At the same time, your code is able to run anywhere that supports docker.
 
-**Method 2**: Set `ogImage` to `true` or remove the field to automatically generate an OG image, saved in `/public/og-images/`. The generated filename will match the Markdown/MDX file, or the directory if it's named `index.md` or `index.mdx`. For example:
+## Install Zsh
 
-```mdx title='src/pages/blog/index.mdx' {5}
----
-title: Blog
+First, update your system's package repository to ensure you have the latest information:
 
-# Auto-generated OG image is saved: `public/og-images/blog.png`
-ogImage: true
----
+```bash
+sudo apt update
+sudo apt install zsh -y
 ```
 
-> [!warning]
-> OG images won’t generate if the frontmatter has `redirect`, `draft: true`, or is missing the `title` field.
+If you want to set Zsh as your default shell, use the following command:
 
-**Method 3**: Set `ogImage` to `false` to prevent generation and use the fallback OG image instead. A fallback OG image named `og-image.png` is stored in `/public/og-images/`, ensuring that any page shared on social platforms displays an image.  
+```bash
+chsh -s $(which zsh)
+```
 
-> [!important]
-> If you need to regenerate the fallback OG image or after modifying `FEATURE.ogImage`, delete `og-image.png` to create a new fallback image.
+## Enable SSH on your server
 
-## Template for Auto-Generated OG Images
+```bash
+sudo apt update
+sudo apt install openssh-server
+```
 
-The template (located in `plugins/og-template/markup.ts`) for auto-generated OG images is built with HTML + UnoCSS and processed by  :link{id=natemoo-re/satori-html style=github}. It takes three parameters:
+Check if it is running
 
-- `authorOrBrand`: Defined by `FEATURE.image[1].authorOrBrand` (also for fallback image) and displayed above the `title`.
-- `title`: Determined by the `title` field in the Markdown/MDX frontmatter; for fallback images, `FEATURE.image[1].fallbackTitle` is used.
-- `bgType`: Set in the MDX frontmatter within `src/pages/`, using `FEATURE.image[1].fallbackBgType`(also for fallback image) if not set or set to `false`.
+```bash
+sudo service ssh status
+```
 
-For details on how to replace the logo in the template, refer to [Advanced Configuration - Customizing Logo](../advanced-configuration/#customizing-logo).
+## Install Tmux
 
-"Below are the OG images generated with `bgType` set to 'plum', 'rose', 'dot', and 'particle':
+```bash
+ sudo apt install tmux
+```
 
-![](../../assets/about-open-graph-images/plum.png)
+## Install Neovim
 
-![](../../assets/about-open-graph-images/rose.png)
+### via appimage
 
-![](../../assets/about-open-graph-images/dot.png)
+In `Downloads` folder
 
-![](../../assets/about-open-graph-images/particle.png)
+```bash
+wget https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
 
-## How This Theme Automatically Generates OG Images
+mv nvim.appimage ~/Softwares/
+chmod u+x nvim.appimage
+```
 
-This theme uses a custom remark plugin (located in [`plugins/remark-generate-og-image.ts`](https://github.com/lin-stephanie/astro-antfustyle-theme/blob/main/plugins/remark-generate-og-image.ts)) to handle the automatic generation of OG images. The decision to use a remark plugin instead of creating [Astro endpoints](https://liruifengv.com/posts/astro-auto-gen-og-image/) was made for the following reasons:
+If no FUSE, run via:
 
-- Each Markdown/MDX file is processed by the remark plugin, allowing the logic for automatically generating OG images to be fully contained within the plugin. If you used endpoints, multiple static file endpoints might be required to generate OG images for each page, which adds complexity. _This is why the theme uses `.mdx` in `src/pages/` to generate pages_.
-- The remark plugin can easily access the necessary parameters for the template. In an Astro project, a configured remark plugin receives the frontmatter for each Markdown/MDX file ([`file.data.astro.frontmatter`](https://docs.astro.build/en/guides/markdown-content/#modifying-frontmatter-programmatically)). With endpoints, under [dynamic routing](https://docs.astro.build/en/guides/routing/#static-ssg-mode), you’d need to use the [`getStaticPaths` API](https://docs.astro.build/en/reference/api-reference/#getstaticpaths) and include dynamic path parameters and template data in the return values.
-- OG images can be centrally managed and previewed in the development environment. Since Astro's [remark and rehype pipelines run when content is rendered](https://docs.astro.build/en/guides/content-collections/#modifying-frontmatter-with-remark), meaning you can trigger OG image generation in the development environment. Using endpoints, however, would only allow you to see the output in the build directory after project completion, with no option to store them in a centralized location.
+```bash
+./nvim.appimage --appimage-extract
+```
 
-## Extra Tips
+and you can execute with `./squashfs-root/usr/bin/nvim`
 
-Auto-generated OG images are compressed with :link{id=lovell/sharp style=github}. For custom images, consider [manual compression](../managing-image-assets/#image-compression). 
+To add it to `.profile`, add the following in `.profile`
 
-If an image with the same name as the Markdown/MDX file (or the directory for `index.md/index.mdx`) already exists in `/public/og-images/`, it won’t be regenerated. To regenerate it, manually delete the corresponding image from the `/public/og-images/` directory.
+```
+PATH=$PATH:/$HOME/Softwares/squashfs-root/usr/bin
+```
 
-If you want to globally disable the auto-generation, set `FEATURES.ogImage` to `false` or `[false, {...}]` in `src/config.ts`.
+## Apply configuration
 
-Thank you for reading. Happy coding! 💃
+Install `starship`:
 
+```bash
+curl -sS https://starship.rs/install.sh | sh
+```
+
+Install `stow` to sync all the dot files
+
+```bash
+sudo apt install stow
+```
+
+Get the dotfiles
+
+```bash
+git clone https://github.com/tiankaixie/dotfiles.git
+```
+
+and then `stow` what ever you need
+
+```bash
+cd dotfiles
+stow tmux
+stow nvim
+```
+
+Or, apply all configurations
+
+```bash
+stow */
+```
+
+## Install Docker
+
+Uninstall old versions
+
+```bash
+sudo apt-get remove docker docker-engine docker.io containerd runc
+```
+
+Install using the apt repository
+
+```bash
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg
+```
+
+```bash
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+```
+
+```bash
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+Install
+
+```bash
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+If get permission problem, try the following to avoid `sudo` every time:
+
+```bash
+sudo usermod -aG docker $USER
+```
