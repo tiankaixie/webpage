@@ -21,25 +21,31 @@ const { title = 'WHATS NEW', items } = Astro.props
     {
       items.map((item) => (
         <li class="!mb-1.5">
-          <div class="flex items-baseline gap-2">
-            <span class="font-mono text-xs text-gray-600 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 px-1 py-0.5 rounded whitespace-nowrap">
+          <div class="flex items-baseline gap-2 min-w-0">
+            <span class="font-mono text-xs text-gray-600 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 px-1 py-0.5 rounded whitespace-nowrap shrink-0">
               {item.date}
             </span>
-            <div class="flex gap-1 items-baseline">
+            <div class="flex gap-3 items-baseline min-w-0 truncate">
               {item.link ? (
                 <a
                   href={item.link}
-                  class="font-mono text-sm text-blue-800 dark:text-blue-300 hover:text-[--theme-text-accent]"
+                  class="font-mono text-sm text-blue-800 dark:text-blue-300 hover:text-[--theme-text-accent] shrink-0"
                 >
                   {item.title}
                 </a>
               ) : (
-                <span class="font-mono text-sm text-blue-800 dark:text-blue-300">
+                <span class="font-mono text-sm text-blue-800 dark:text-blue-300 shrink-0">
                   {item.title}
                 </span>
               )}
-              <span class="text-gray-600 dark:text-gray-400 font-mono text-sm">
+              <span
+                class="text-gray-600 dark:text-gray-400 font-mono text-sm truncate group relative cursor-help"
+                title={item.description}
+              >
                 {item.description}
+                <span class="pointer-events-none absolute left-0 -top-1 -translate-y-full opacity-0 group-hover:opacity-100 transition-opacity bg-gray-800 dark:bg-gray-700 text-white px-2 py-1 rounded text-xs max-w-[300px] whitespace-normal z-50">
+                  {item.description}
+                </span>
               </span>
             </div>
           </div>

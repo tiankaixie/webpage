@@ -5,11 +5,11 @@ const isHomePage = currentPath === '/'
 ---
 
 <header
-  class={`flex items-center ${isHomePage ? 'justify-end' : 'justify-between'} p-2 lt-md:px-4`}
+  class={`flex items-center ${isHomePage ? 'justify-end' : 'justify-between'} py-4 px-4`}
 >
   {
     !isHomePage && (
-      <a href="/" class="flex items-center">
+      <a href="/" class="flex items-center h-8">
         <img
           src="/TKsm.png"
           alt="Home"
@@ -18,17 +18,17 @@ const isHomePage = currentPath === '/'
       </a>
     )
   }
-  <nav class="flex items-center gap-4" aria-label="Main menu">
+  <nav class="flex items-center gap-4 h-8" aria-label="Main menu">
     <div class="flex items-center gap-4 font-mono text-sm">
       <a
         href="/blog"
         class="text-gray-600 hover:text-[--theme-text-accent] dark:text-gray-400"
-        >blog</a
+        >BLOG</a
       >
       <a
         href="/projects"
         class="text-gray-600 hover:text-[--theme-text-accent] dark:text-gray-400"
-        >projects</a
+        >PROJECTS</a
       >
     </div>
     <div class="grid grid-flow-col print:op-0">
