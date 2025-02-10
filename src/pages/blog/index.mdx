@@ -1,23 +1,36 @@
 ---
-title: Blog
-description: My blog posts
-subtitle: My blog posts
+title: 'Blog'
+description: ''
+subtitle: ''
 bgType: dot
 toc: false
 ogImage: false
+hideBackLink: true
 ---
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
-import ListView from '~/components/views/ListView.astro'
+import BlogCard from '~/components/base/BlogCard.astro'
+import { getCollection } from 'astro:content'
+
+export const posts = await getCollection('blog')
 
 <BaseLayout
   title={frontmatter.title}
   description={frontmatter.description}
   bgType={frontmatter.bgType}
   ogImage={frontmatter.ogImage}
+  hideBackLink={frontmatter.hideBackLink}
 >
-  <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
-    <ListView slot="list" pageToc={frontmatter.toc} collectionType="blog" />
+  <StandardLayout
+    title={frontmatter.title}
+    subtitle={frontmatter.subtitle}
+    isCentered={true}
+  >
+    <div slot="article" class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="font-mono">
+        <BlogCard posts={posts} title="" />
+      </div>
+    </div>
   </StandardLayout>
 </BaseLayout>

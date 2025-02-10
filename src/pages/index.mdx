@@ -10,6 +10,14 @@ ogImage: false
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
 import RenderPost from '~/components/views/RenderPost.astro'
+import FeatureCard from '~/components/base/FeatureCard.astro'
+import NewsCard from '~/components/base/NewsCard.astro'
+import { getEntry } from 'astro:content'
+import { newsItems } from '~/data/news'
+
+{/* Get content data */}
+export const homeContent = await getEntry('home', 'index')
+export const { title: contentTitle, description: contentDesc, features } = homeContent.data
 
 <BaseLayout
   title={frontmatter.title}
@@ -18,11 +26,34 @@ import RenderPost from '~/components/views/RenderPost.astro'
   ogImage={frontmatter.ogImage}
 >
   <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
-    <RenderPost
-      slot="article"
-      pageToc={frontmatter.toc}
-      collectionType="home"
-      slug="index"
-    />
+    <div slot="article" class="max-w-7xl mx-auto px-4">
+      <img
+        src="/TKsm.png"
+        alt="TK's profile picture"
+        style={{
+          width: '150px',
+          height: '150px',
+          margin: '0 auto 1.5rem',
+          display: 'block',
+        }}
+      />
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        <div class="col-span-1">
+          <FeatureCard
+            title={contentTitle}
+            description={contentDesc}
+            features={features}
+          />
+        </div>
+        <div class="col-span-1 md:col-span-2">
+          <NewsCard items={newsItems} />
+        </div>
+      </div>
+      <RenderPost
+        pageToc={frontmatter.toc}
+        collectionType="home"
+        slug="index"
+      />
+    </div>
   </StandardLayout>
 </BaseLayout>

@@ -6,7 +6,6 @@ import '~/styles/markdown.css'
 import '~/styles/page.css'
 
 import Head from '~/components/base/Head.astro'
-import Background from '~/components/backgrounds/Background.astro'
 import Link from '~/components/base/Link.astro'
 import NavBar from '~/components/base/NavBar.astro'
 import BackLink from '~/components/widgets/BackLink.astro'
@@ -26,10 +25,17 @@ interface Props {
   bgType?: BgType | false
   pubDate?: string
   lastModDate?: string
+  hideBackLink?: boolean
 }
 
-const { title, description, ogImage, bgType, pubDate, lastModDate } =
-  Astro.props
+const {
+  title,
+  description,
+  ogImage,
+  pubDate,
+  lastModDate,
+  hideBackLink = false,
+} = Astro.props
 
 const { slideEnterAnim } = FEATURES
 const slideEnterAnimEnabled = Array.isArray(slideEnterAnim) && slideEnterAnim[0]
@@ -50,9 +56,6 @@ const style = slideEnterAnimEnabled
     data-no-sliding={!slideEnterAnimEnabled ? true : undefined}
     {style}
   >
-    <!-- Background -->
-    {bgType && <Background type={bgType} />}
-
     <!-- Main -->
     <Link
       href="#main"
@@ -61,10 +64,10 @@ const style = slideEnterAnimEnabled
       Skip to content
     </Link>
     <NavBar />
-    <main id="main" class="px-7 py-10">
+    <main id="main" class="px-7 py-4">
       <slot />
       {
-        Astro.url.pathname !== getUrl('/') && (
+        !hideBackLink && Astro.url.pathname !== getUrl('/') && (
           <footer class="slide-enter animate-delay-1000! prose mx-auto mt-8 print:hidden">
             <slot name="share" />
             <br />

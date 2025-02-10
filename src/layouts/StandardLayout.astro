@@ -16,13 +16,14 @@ const {
 
 <header
   class:list={{
-    'prose mx-auto mb-8': true,
+    'prose mx-auto mb-2': true,
     'text-center': isCentered,
   }}
 >
   {
     title && (
       <h1
+        class="font-mono"
         data-pagefind-body={isSearchable ? true : undefined}
         data-pagefind-weight={isSearchable ? '10' : undefined}
         data-pagefind-meta={isSearchable ? 'title' : undefined}
@@ -31,13 +32,13 @@ const {
       </h1>
     )
   }
-  {subtitle && <p class="mt--4! op-50 italic">{subtitle}</p>}
+  {subtitle && <p class="mt--4! op-50 italic font-mono">{subtitle}</p>}
   <slot name="head" />
 </header>
 {
   Astro.slots.has('article') && (
     <article
-      class="slide-enter-content prose mx-auto"
+      class="slide-enter-content max-w-7xl mx-auto pt-2"
       data-pagefind-body={isSearchable ? true : undefined}
     >
       <slot name="article" />

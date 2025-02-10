@@ -2,7 +2,6 @@
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
 import Toc from '~/components/toc/Toc.astro'
-import ShareLink from '~/components/widgets/ShareLink.astro'
 import Warning from '~/components/base/Warning.astro'
 import { formatDate } from '~/utils/datetime'
 import { getFilteredPosts } from '~/utils/post'
@@ -20,7 +19,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props
 const { data: frontmatter } = post
 const { Content, headings, remarkPluginFrontmatter } = await post.render()
-const { share, toc } = FEATURES
+const { toc } = FEATURES
 
 const pubDate = frontmatter.pubDate.toISOString()
 const lastModDate =
@@ -40,38 +39,118 @@ frontmatter to <code>false</code> or remove it to publish the post.`
   ogImage={frontmatter.ogImage}
   {pubDate}
   {lastModDate}
+  hideBackLink={true}
 >
   <StandardLayout
     title={frontmatter.title}
     subtitle={frontmatter.subtitle}
     isSearchable={true}
+    isCentered={true}
   >
     <Fragment slot="head">
-      {
-        frontmatter.pubDate && (
-          <p class="mt--6! op-50">
-            <time datetime={pubDate}>{formatDate(pubDate)}</time>
-            {minutesRead !== 0 && <span>· {minutesRead} min</span>}
-            {lastModDate && (
-              <time datetime={lastModDate}>
-                | Updated: {formatDate(lastModDate)}
-              </time>
-            )}
-          </p>
-        )
-      }
-      {frontmatter.draft && <Warning rawHTMLString={warningHTML} />}
+      <div class="font-mono text-xs text-gray-500 dark:text-gray-400 mt--2">
+        {
+          frontmatter.pubDate && (
+            <p class="flex items-center justify-center gap-2">
+              <time datetime={pubDate}>{formatDate(pubDate)}</time>
+              {minutesRead !== 0 && <span>· {minutesRead} min</span>}
+              {lastModDate && (
+                <>
+                  <span>|</span>
+                  <time datetime={lastModDate}>
+                    Updated: {formatDate(lastModDate)}
+                  </time>
+                </>
+              )}
+            </p>
+          )
+        }
+        {frontmatter.draft && <Warning rawHTMLString={warningHTML} />}
+      </div>
     </Fragment>
-    <Fragment slot="article">
-      {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
-      <Content />
-    </Fragment>
+    <div slot="article" class="max-w-2xl mx-auto px-4">
+      <div class="font-mono p-3 border-1 border-gray-200 dark:border-gray-800">
+        {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
+        <article
+          class="prose prose-neutral dark:prose-invert prose-sm prose-pre:p-0"
+        >
+          <Content />
+        </article>
+      </div>
+    </div>
   </StandardLayout>
-  <Fragment slot="share">
-    {
-      Array.isArray(share) && share[0] && frontmatter.share && (
-        <ShareLink config={share[1]} />
-      )
-    }
-  </Fragment>
 </BaseLayout>
+
+<style>
+  /* Customize article content styles */
+  :global(.prose) {
+    max-width: none;
+  }
+  :global(.prose p, .prose li) {
+    font-family: theme('fontFamily.mono');
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-top: 0.75em;
+    margin-bottom: 0.75em;
+  }
+  :global(.prose h1) {
+    font-family: theme('fontFamily.mono');
+    font-size: 1.25rem;
+    line-height: 1.4;
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+  }
+  :global(.prose h2) {
+    font-family: theme('fontFamily.mono');
+    font-size: 1.1rem;
+    line-height: 1.4;
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+  }
+  :global(.prose h3, .prose h4, .prose h5, .prose h6) {
+    font-family: theme('fontFamily.mono');
+    font-size: 0.95rem;
+    line-height: 1.4;
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+  }
+  :global(.prose code) {
+    font-family: theme('fontFamily.mono');
+    font-size: 0.8rem !important;
+    background-color: rgb(243 244 246);
+    padding: 0.2em 0.4em;
+    border-radius: 0.25em;
+  }
+  :global(.dark .prose code) {
+    background-color: rgb(31 41 55);
+  }
+  :global(.prose pre) {
+    margin: 1em 0;
+    padding: 1em;
+    background-color: rgb(243 244 246) !important;
+  }
+  :global(.dark .prose pre) {
+    background-color: rgb(31 41 55) !important;
+  }
+  :global(.prose pre code) {
+    font-size: 0.75rem !important;
+    line-height: 1.5;
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    color: inherit;
+  }
+  /* Override Shiki theme background */
+  :global(.prose pre:not([class*='language-'])) {
+    background-color: rgb(243 244 246) !important;
+  }
+  :global(.dark .prose pre:not([class*='language-'])) {
+    background-color: rgb(31 41 55) !important;
+  }
+
+  /* Add styles for the title and date spacing */
+  :global(.prose h1:first-of-type) {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+  }
+</style>

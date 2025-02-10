@@ -1,0 +1,84 @@
+---
+interface Props {
+  title?: string
+  posts: {
+    slug: string
+    data: {
+      title: string
+      pubDate: string
+      description?: string
+    }
+  }[]
+}
+
+const { title = '', posts } = Astro.props
+---
+
+<div class="p-3 border-1 border-gray-200 dark:border-gray-800">
+  {
+    title && (
+      <div class="!mt-0 !mb-1.5 font-mono text-sm not-prose">{title}</div>
+    )
+  }
+
+  <ul class="!mt-0 list-none !pl-0">
+    {
+      posts.map((post) => (
+        <li class="!mb-4">
+          <div class="flex items-baseline gap-4">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center">
+                <a
+                  href={`/blog/${post.slug}`}
+                  class="font-mono text-sm text-blue-800 dark:text-blue-300 hover:text-[--theme-text-accent] truncate"
+                >
+                  {post.data.title}
+                </a>
+                <div class="dots mx-2 flex-1 h-[2px]" />
+                <span class="font-mono text-xs text-gray-600 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 px-1 py-0.5 rounded whitespace-nowrap">
+                  {new Date(post.data.pubDate).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  })}
+                </span>
+              </div>
+              {post.data.description && (
+                <div class="mt-1">
+                  <span class="text-gray-600 dark:text-gray-400 font-mono text-sm truncate block">
+                    {post.data.description}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  a {
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .dots {
+    background-image: radial-gradient(
+      circle at center,
+      rgb(209 213 219) 1px,
+      transparent 1px
+    );
+    background-size: 4px 4px;
+    background-position: center;
+  }
+
+  :global(.dark) .dots {
+    background-image: radial-gradient(
+      circle at center,
+      rgb(75 85 99) 1px,
+      transparent 1px
+    );
+  }
+</style>
