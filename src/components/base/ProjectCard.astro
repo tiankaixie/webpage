@@ -1,0 +1,45 @@
+---
+interface Props {
+  title: string
+  description: string
+  tags?: string[]
+  link?: string
+  repo?: string
+}
+
+const { title, description, tags = [], link, repo } = Astro.props
+---
+
+<div class="p-3 border-1 border-gray-200 dark:border-gray-800">
+  <div class="flex items-baseline justify-between">
+    <div class="font-mono text-sm text-blue-800 dark:text-blue-300">
+      {link ? (
+        <a href={link} class="hover:text-[--theme-text-accent] no-underline">
+          {title}
+        </a>
+      ) : (
+        title
+      )}
+    </div>
+    {repo && (
+      <a
+        href={repo}
+        class="font-mono text-xs text-gray-500 hover:text-[--theme-text-accent]"
+      >
+        GitHub ↗
+      </a>
+    )}
+  </div>
+  <p class="text-gray-600 dark:text-gray-400 font-mono text-sm mt-1.5 mb-2">
+    {description}
+  </p>
+  {tags.length > 0 && (
+    <div class="flex flex-wrap gap-1">
+      {tags.map(tag => (
+        <span class="font-mono text-xs text-gray-600 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 px-1 py-0.5 rounded">
+          {tag}
+        </span>
+      ))}
+    </div>
+  )}
+</div>

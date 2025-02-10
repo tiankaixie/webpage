@@ -1,0 +1,74 @@
+---
+interface Feature {
+  name: string
+  link?: string
+}
+
+interface Props {
+  title: string
+  description: string
+  features: Feature[]
+}
+
+const { title, description, features } = Astro.props
+---
+
+<div class="p-6 border-1 border-gray-200 dark:border-gray-800">
+  <div class="mb-6">
+    <div class="!mt-0 !mb-2 font-mono text-sm not-prose">{title}</div>
+    <p class="!mt-0 text-gray-600 dark:text-gray-400 font-mono text-sm">
+      {description}
+    </p>
+  </div>
+
+  <div class="features">
+    <div class="!mt-4 !mb-4 font-mono text-sm not-prose">CONTACT</div>
+    <ul class="!mt-0 list-none !pl-0">
+      {
+        features.map((feature) => (
+          <li class="flex items-center gap-2 !mb-2">
+            {feature.link ? (
+              <a
+                href={feature.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-mono text-sm"
+              >
+                {feature.name}
+              </a>
+            ) : (
+              <span class="font-mono text-sm">{feature.name}</span>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<style>
+  .dots {
+    display: inline-block;
+    width: 100%;
+    border-bottom: 1px dotted #666;
+    margin: 0 4px;
+    opacity: 0.3;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  a:hover {
+    color: var(--theme-text-accent);
+  }
+</style>

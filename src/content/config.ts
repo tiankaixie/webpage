@@ -1,5 +1,5 @@
 import { glob } from 'astro/loaders'
-import { defineCollection } from 'astro:content'
+import { defineCollection, z } from 'astro:content'
 import { feedLoader } from '@ascorbic/feed-loader'
 import { githubReleasesLoader } from 'astro-loader-github-releases'
 import { githubPrsLoader } from 'astro-loader-github-prs'
@@ -60,6 +60,18 @@ const prs = defineCollection({
   }),
 })
 
+const home = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    features: z.array(z.object({
+      name: z.string(),
+      link: z.string().optional()
+    }))
+  })
+})
+
 export const collections = {
   pages,
   blog,
@@ -69,4 +81,5 @@ export const collections = {
   feeds,
   releases,
   prs,
+  home
 }

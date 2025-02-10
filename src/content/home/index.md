@@ -1,60 +1,22 @@
-  <div class="flex justify-center">
-    <img src="/TKsm.png" class="rounded-full w-64 h-64 object-cover" alt="TK's profile picture" />
-  </div>
+---
+title: "Hey, I am TK"
+description: "As an AI researcher and developer, I focus on integrating artificial intelligence seamlessly into daily life, bridging virtual and physical worlds. I develop solutions to reduce digital information overload and make technology more accessible, working towards a future where AI naturally enhances human capabilities and improves everyone's quality of life."
+# description: "I am a AI researcher and developer dedicated to bridging the gap between virtual and physical realms through artificial intelligence. With a clear vision of reducing information chaos in our increasingly digital world, I strive to develop solutions that seamlessly integrate AI into everyday life. My mission is to harness the power of artificial intelligence to enhance human experiences, making technology more accessible and meaningful while helping people navigate the complexities of our information-rich age with greater ease and purpose. Through my work, I aim to create a future where technology serves as a natural extension of human capability, ultimately improving quality of life for all."
+features:
+  - name: "Google Scholar"
+    link: "https://scholar.google.com/citations?user=iGRSrJUAAAAJ&hl=en&inst=1960582506653781529&oi=ao"
+  - name: "GitHub"
+    link: "https://github.com/tiankaixie"
+  - name: "Twitter"
+    link: "https://x.com/tiankaixie"
+  - name: "Instagram"
+    link: "https://www.instagram.com/tiankaixie"
+  - name: "LinkedIn"
+    link: "https://www.linkedin.com/in/tiankaixie"
+  - name: "CV"
+    link: "/cv.pdf"
 
-<p class="flex justify-center">
-  <span class="inline-flex flex-wrap gap-2 op-75 hover:op-100">
-    <a
-      href="https://scholar.google.com/citations?user=iGRSrJUAAAAJ&hl=en&inst=1960582506653781529&oi=ao"
-      target="_blank"
-      aria-label="Find me on Google Scholar (external link)"
-    >
-      <span i-simple-icons-googlescholar></span>
-    </a>
-    <a
-      href="https://github.com/tiankaixie"
-      target="_blank"
-      aria-label="Find me on GitHub (external link)"
-    >
-      <span i-simple-icons-github></span>
-    </a>
-    <a
-      href="https://x.com/tiankaixie"
-      target="_blank"
-      aria-label="Find me on Twitter (external link)"
-    >
-      <span i-ri-twitter-x-fill></span>
-    </a>
-    <a
-      href="https://www.instagram.com/tiankaixie"
-      target="_blank"
-      aria-label="Find me on Instagram (external link)"
-    >
-      <span i-simple-icons-instagram></span>
-    </a>
-    <a
-      href="https://www.linkedin.com/in/tiankaixie"
-      target="_blank"
-      aria-label="Find me on LinkedIn (external link)"
-    >
-      <span i-simple-icons-linkedin></span>
-    </a>
-    <a
-      href="/cv.pdf"
-      target="_blank"
-      aria-label="View my CV (external link)"
-    >
-      <span i-ri-file-pdf2-fill></span>
-    </a>
-  </span>
-</p>
-
-
-**Hey, I am TK**
-
-I am a AI researcher and developer dedicated to bridging the gap between virtual and physical realms through artificial intelligence.
-With a clear vision of reducing information chaos in our increasingly digital world, I strive to develop solutions that seamlessly integrate AI into everyday life. My mission is to harness the power of artificial intelligence to enhance human experiences, making technology more accessible and meaningful while helping people navigate the complexities of our information-rich age with greater ease and purpose. Through my work, I aim to create a future where technology serves as a natural extension of human capability, ultimately improving quality of life for all.
-
+---
 
 
 
