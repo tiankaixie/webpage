@@ -27,7 +27,7 @@ export const posts = await getCollection('blog')
     subtitle={frontmatter.subtitle}
     isCentered={true}
   >
-    <div slot="article" class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div slot="article" class="max-w-4xl mx-auto px-1 sm:px-4 lg:px-8">
       <div class="font-mono">
         <BlogCard posts={posts} title="" />
       </div>

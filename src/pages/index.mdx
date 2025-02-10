@@ -26,7 +26,7 @@ export const { title: contentTitle, description: contentDesc, features } = homeC
   ogImage={frontmatter.ogImage}
 >
   <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
-    <div slot="article" class="max-w-7xl mx-auto px-4">
+    <div slot="article" class="max-w-7xl mx-auto px-1 sm:px-4">
       <img
         src="/TKsm.png"
         alt="TK's profile picture"
@@ -37,7 +37,7 @@ export const { title: contentTitle, description: contentDesc, features } = homeC
           display: 'block',
         }}
       />
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-7xl mx-auto">
         <div class="col-span-1">
           <FeatureCard
             title={contentTitle}

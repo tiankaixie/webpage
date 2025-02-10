@@ -51,13 +51,19 @@ frontmatter to <code>false</code> or remove it to publish the post.`
       <div class="font-mono text-xs text-gray-500 dark:text-gray-400 mt--2">
         {
           frontmatter.pubDate && (
-            <p class="flex items-center justify-center gap-2">
+            <p class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
               <time datetime={pubDate}>{formatDate(pubDate)}</time>
-              {minutesRead !== 0 && <span>· {minutesRead} min</span>}
+              {minutesRead !== 0 && (
+                <>
+                  <span class="hidden sm:inline">·</span>
+                  <span>{minutesRead} min</span>
+                </>
+              )}
               {lastModDate && (
                 <>
-                  <span>|</span>
-                  <time datetime={lastModDate}>
+                  <span class="hidden sm:inline">|</span>
+                  <span class="sm:hidden">•</span>
+                  <time datetime={lastModDate} class="whitespace-nowrap">
                     Updated: {formatDate(lastModDate)}
                   </time>
                 </>
@@ -68,8 +74,10 @@ frontmatter to <code>false</code> or remove it to publish the post.`
         {frontmatter.draft && <Warning rawHTMLString={warningHTML} />}
       </div>
     </Fragment>
-    <div slot="article" class="max-w-2xl mx-auto px-4">
-      <div class="font-mono p-3 border-1 border-gray-200 dark:border-gray-800">
+    <div slot="article" class="max-w-2xl mx-auto px-2 sm:px-4">
+      <div
+        class="font-mono p-2 sm:p-3 border-1 border-gray-200 dark:border-gray-800"
+      >
         {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
         <article
           class="prose prose-neutral dark:prose-invert prose-sm prose-pre:p-0"
