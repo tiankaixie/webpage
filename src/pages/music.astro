@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import MusicGallery from '../components/music/MusicGallery'
+import { albums } from '../data/music'
+---
+
+<BaseLayout title="Music Collection" hideBackLink={true}>
+  <MusicGallery client:only="react" {albums} />
+</BaseLayout>
+
+<style>
+  :global(body) {
+    overflow: hidden;
+  }
+</style>

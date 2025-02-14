@@ -1,5 +1,11 @@
 export const newsItems = [
   {
+    date: '02-14-2025',
+    title: 'Changelog 0.2',
+    link: '#',
+    description: 'Add a new page for my music',
+  },
+  {
     date: '02-09-2025',
     title: 'Changelog 0.1',
     link: '#',
