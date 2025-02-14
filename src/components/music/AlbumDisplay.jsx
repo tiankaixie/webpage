@@ -17,7 +17,7 @@ const months = [
   'December',
 ]
 
-export default function AlbumDisplay({ album }) {
+export default function AlbumDisplay({ album, isMobile }) {
   const containerRef = useRef(null)
   const sceneRef = useRef(null)
   const cameraRef = useRef(null)
@@ -57,7 +57,8 @@ export default function AlbumDisplay({ album }) {
       attributeFilter: ['class'],
     })
 
-    // Initialize camera
+    // Initialize camera with responsive viewSize
+    const viewSize = isMobile ? 0.5 : 0.6 // Slightly smaller on mobile
     const padding = getResponsivePadding()
     const containerWidth = Math.min(
       (window.innerWidth - padding * 4) / 2,
@@ -102,7 +103,6 @@ export default function AlbumDisplay({ album }) {
     rendererRef.current = renderer
 
     // Use orthographic camera with square frustum
-    const viewSize = 0.6 // Smaller viewSize makes the album appear larger
     const camera = new THREE.OrthographicCamera(
       -viewSize,
       viewSize,
@@ -366,7 +366,7 @@ export default function AlbumDisplay({ album }) {
     }
     animate()
 
-    // Update resize handler
+    // Update resize handler for mobile
     function handleResize() {
       if (!containerRef.current || !renderer || !camera) return
 
@@ -381,8 +381,8 @@ export default function AlbumDisplay({ album }) {
       renderer.domElement.style.width = `${size}px`
       renderer.domElement.style.height = `${size}px`
 
-      // Update camera to maintain square view
-      const viewSize = 0.6 // Keep consistent with initial viewSize
+      // Update camera to maintain square view with mobile-aware viewSize
+      const viewSize = isMobile ? 0.5 : 0.6
       camera.left = -viewSize
       camera.right = viewSize
       camera.top = viewSize
@@ -405,7 +405,7 @@ export default function AlbumDisplay({ album }) {
       }
       scene.clear()
     }
-  }, [album])
+  }, [album, isMobile])
 
   if (!album) return null
 
@@ -413,8 +413,9 @@ export default function AlbumDisplay({ album }) {
     <div
       className="border-1 border-gray-200 dark:border-gray-800"
       style={{
-        width: '50%',
-        height: '100%',
+        width: isMobile ? '100%' : '50%',
+        height: isMobile ? 'auto' : '100%',
+        minHeight: isMobile ? '40vh' : 'auto',
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: 'transparent',
@@ -429,7 +430,7 @@ export default function AlbumDisplay({ album }) {
         ref={containerRef}
         style={{
           width: '100%',
-          height: '100%',
+          height: isMobile ? '40vh' : '100%',
           position: 'relative',
           aspectRatio: '1',
           overflow: 'hidden',
@@ -446,7 +447,7 @@ export default function AlbumDisplay({ album }) {
           width: '100%',
           padding: '12px',
           backgroundColor: 'transparent',
-          maxHeight: '20%',
+          maxHeight: isMobile ? 'none' : '20%',
           overflowY: 'auto',
           position: 'relative',
           zIndex: 2,

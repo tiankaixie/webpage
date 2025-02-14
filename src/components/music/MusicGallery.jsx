@@ -16,6 +16,7 @@ export default function MusicGallery({ albums }) {
         backgroundColor: 'var(--c-bg)',
         fontFamily:
           'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
+        overflowY: 'auto',
       }}
     >
       <div
@@ -23,7 +24,7 @@ export default function MusicGallery({ albums }) {
           height: '100%',
           maxWidth: '1280px',
           margin: '0 auto',
-          padding: '28px',
+          padding: window.innerWidth >= 768 ? '28px' : '12px',
           display: 'flex',
           gap: '12px',
         }}
@@ -33,17 +34,23 @@ export default function MusicGallery({ albums }) {
           style={{
             width: '100%',
             display: 'flex',
+            flexDirection: window.innerWidth >= 768 ? 'row' : 'column',
             gap: '12px',
             padding: '12px',
             backgroundColor: 'transparent',
+            height: window.innerWidth >= 768 ? '100%' : 'auto',
           }}
         >
           <AlbumList
             albums={albums}
             selectedAlbum={selectedAlbum}
             onSelectAlbum={setSelectedAlbum}
+            isMobile={window.innerWidth < 768}
           />
-          <AlbumDisplay album={selectedAlbum} />
+          <AlbumDisplay
+            album={selectedAlbum}
+            isMobile={window.innerWidth < 768}
+          />
         </div>
       </div>
     </div>

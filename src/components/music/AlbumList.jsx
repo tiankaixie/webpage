@@ -15,7 +15,12 @@ const months = [
   'December',
 ]
 
-export default function AlbumList({ albums, selectedAlbum, onSelectAlbum }) {
+export default function AlbumList({
+  albums,
+  selectedAlbum,
+  onSelectAlbum,
+  isMobile,
+}) {
   // Get unique years from albums
   const years = useMemo(() => {
     const uniqueYears = [...new Set(albums.map((album) => album.year))]
@@ -39,8 +44,9 @@ export default function AlbumList({ albums, selectedAlbum, onSelectAlbum }) {
     <div
       className="border-1 border-gray-200 dark:border-gray-800"
       style={{
-        width: '50%',
-        height: '100%',
+        width: isMobile ? '100%' : '50%',
+        height: isMobile ? 'auto' : '100%',
+        maxHeight: isMobile ? '40vh' : '100%',
         overflowY: 'auto',
         backgroundColor: 'transparent',
         fontFamily:
@@ -54,6 +60,10 @@ export default function AlbumList({ albums, selectedAlbum, onSelectAlbum }) {
           gap: '4px',
           marginBottom: '6px',
           padding: '12px',
+          position: 'sticky',
+          top: 0,
+          backgroundColor: 'var(--c-bg)',
+          zIndex: 1,
         }}
       >
         <select
@@ -103,7 +113,12 @@ export default function AlbumList({ albums, selectedAlbum, onSelectAlbum }) {
 
       {/* Albums List */}
       <div
-        style={{ display: 'flex', flexDirection: 'column', padding: '0 12px' }}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '0 12px',
+          paddingBottom: isMobile ? '12px' : 0,
+        }}
       >
         {filteredAlbums.length === 0 ? (
           <div
