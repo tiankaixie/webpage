@@ -1,8 +1,13 @@
 ---
 title: Setting up Remote Server Development Environment
 description: A comprehensive guide to setting up a remote development environment on Ubuntu LTS that enables development from any device. This setup eliminates dependencies on local operating systems and hardware limitations while providing a consistent development experience
+subtitle: A Guide to Platform-Independent Development
 pubDate: 2024-10-13
-lastModDate: 2025-01-14
+lastModDate: "2025-01-14"
+radio: false
+video: false
+platform: "Ubuntu"
+draft: false
 toc: true
 share: true
 ogImage: true
