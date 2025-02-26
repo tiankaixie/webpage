@@ -22,8 +22,7 @@ const { Content, headings, remarkPluginFrontmatter } = await post.render()
 const { toc } = FEATURES
 
 const pubDate = frontmatter.pubDate.toISOString()
-const lastModDate =
-  frontmatter.lastModDate && frontmatter.lastModDate.toISOString()
+const lastModDate = frontmatter.lastModDate
 const minutesRead =
   frontmatter.minutesRead || remarkPluginFrontmatter.minutesRead
 
