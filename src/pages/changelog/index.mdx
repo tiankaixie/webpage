@@ -1,23 +1,36 @@
 ---
-title: Changelog
+title: 'Changelog'
+description: 'Track the evolution of the website'
 subtitle: ''
-description: News about my website
 bgType: dot
 toc: false
-ogImage: true
+ogImage: false
+hideBackLink: true
 ---
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
-import TabbedLayout from '~/layouts/TabbedLayout.astro'
-import ListView from '~/components/views/ListView.astro'
+import StandardLayout from '~/layouts/StandardLayout.astro'
+import ChangelogCard from '~/components/base/ChangelogCard.astro'
+import { getCollection } from 'astro:content'
+
+export const posts = await getCollection('changelog')
 
 <BaseLayout
   title={frontmatter.title}
   description={frontmatter.description}
   bgType={frontmatter.bgType}
   ogImage={frontmatter.ogImage}
+  hideBackLink={frontmatter.hideBackLink}
 >
-  <TabbedLayout subtitle={frontmatter.subtitle}>
-    <ListView pageToc={frontmatter.toc} collectionType="changelog" />
-  </TabbedLayout>
+  <StandardLayout
+    title={frontmatter.title}
+    subtitle={frontmatter.subtitle}
+    isCentered={true}
+  >
+    <div slot="article" class="max-w-4xl mx-auto px-1 sm:px-4 lg:px-8">
+      <div class="font-mono">
+        <ChangelogCard posts={posts} title="" />
+      </div>
+    </div>
+  </StandardLayout>
 </BaseLayout>

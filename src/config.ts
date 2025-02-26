@@ -26,6 +26,12 @@ export const UI: Ui = {
       text: 'Projects',
     },
     {
+      path: '/music',
+      title: 'Music',
+      displayMode: 'alwaysText',
+      text: 'Music',
+    },
+    {
       path: '/changelog',
       title: 'Changelog',
       displayMode: 'iconToTextOnMobile',

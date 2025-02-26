@@ -1,14 +1,14 @@
 export const newsItems = [
   {
     date: '02-14-2025',
-    title: 'Changelog 0.2',
-    link: '#',
+    title: 'Changelog 0.2.0',
+    link: '/changelog/0-2-0',
     description: 'Add a new page for my music',
   },
   {
     date: '02-09-2025',
-    title: 'Changelog 0.1',
-    link: '#',
+    title: 'Changelog 0.1.0',
+    link: '/changelog/0-1-0',
     description: 'New year, new look for the website',
   },
   {
@@ -35,7 +35,7 @@ export const newsItems = [
   {
     date: '10-12-2024',
     title: 'New Blog Post',
-    link: '#',
+    link: '/blog/server-development-environment',
     description: 'Setting up Remote Server Development Environment',
   },
 ]

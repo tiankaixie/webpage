@@ -3,7 +3,7 @@ import { defineCollection, z } from 'astro:content'
 import { feedLoader } from '@ascorbic/feed-loader'
 import { githubReleasesLoader } from 'astro-loader-github-releases'
 import { githubPrsLoader } from 'astro-loader-github-prs'
-import { pageSchema, postSchema, projectsSchema, streamsSchema } from './schema'
+import { pageSchema, projectsSchema, streamsSchema } from './schema'
 
 const pages = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/pages' }),
@@ -12,7 +12,22 @@ const pages = defineCollection({
 
 const blog = defineCollection({
   type: 'content',
-  schema: postSchema,
+  schema: z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    description: z.string(),
+    toc: z.boolean(),
+    ogImage: z.union([z.string(), z.boolean()]),
+    pubDate: z.date(),
+    radio: z.boolean(),
+    video: z.boolean(),
+    platform: z.string(),
+    share: z.boolean(),
+    draft: z.boolean(),
+    lastModDate: z.string().optional(),
+    minutesRead: z.number().optional(),
+    redirect: z.string().optional(),
+  }),
 })
 
 const projects = defineCollection({
@@ -22,7 +37,14 @@ const projects = defineCollection({
 
 const changelog = defineCollection({
   type: 'content',
-  schema: postSchema,
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    version: z.string(),
+    pubDate: z.date(),
+    ogImage: z.union([z.string(), z.boolean()]).optional(),
+    toc: z.boolean().optional().default(true),
+  }),
 })
 
 const streams = defineCollection({
@@ -65,11 +87,13 @@ const home = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    features: z.array(z.object({
-      name: z.string(),
-      link: z.string().optional()
-    }))
-  })
+    features: z.array(
+      z.object({
+        name: z.string(),
+        link: z.string().optional(),
+      })
+    ),
+  }),
 })
 
 export const collections = {
@@ -81,5 +105,5 @@ export const collections = {
   feeds,
   releases,
   prs,
-  home
+  home,
 }
