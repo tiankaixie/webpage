@@ -1,5 +1,11 @@
 export const newsItems = [
   {
+    date: '04-07-2025',
+    title: 'Joined Mad Realities',
+    link: '#',
+    description: 'Working on building the professional AI workflows for content creation as a AI Research Scientist',
+  },
+  {
     date: '02-14-2025',
     title: 'Changelog 0.2.0',
     link: '/changelog/0-2-0',
