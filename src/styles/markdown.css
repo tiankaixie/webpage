@@ -4,9 +4,9 @@
 
 /* Prose Complement */
 .prose {
-  --fg-light: #888;
-  --fg: #555;
-  --fg-deep: #222;
+  --fg-light: #a8a7a0;
+  --fg: var(--c-text);
+  --fg-deep: #5a5953;
   --fg-deeper: var(--c-text);
 
   color: var(--fg);
@@ -33,9 +33,9 @@
 }
 
 html.dark .prose {
-  --fg-light: #888;
-  --fg: #bbb;
-  --fg-deep: #ddd;
+  --fg-light: #b0aeaa;
+  --fg: var(--c-text);
+  --fg-deep: #e0ded8;
   --fg-deeper: var(--c-text);
 }
 

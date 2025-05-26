@@ -1,15 +1,19 @@
 :root {
-  --c-bg: #fff;
-  --c-scrollbar: #ddd;
-  --c-scrollbar-hover: #bbb;
-  --c-text: #000;
+  --c-bg: rgb(250, 249, 245);
+  --c-scrollbar: #d3d1c9;
+  --c-scrollbar-hover: #bdbbaf;
+  --c-text: #6b6a63;
+  --fg: #6b6a63;
+  /* Consider adding --c-ui-bg: #F0EDE6; if needed for other elements */
 }
 
 :root.dark {
-  --c-bg: #050505;
-  --c-scrollbar: #222;
-  --c-scrollbar-hover: #444;
-  --c-text: #fff;
+  --c-bg: #242321;
+  --c-scrollbar: #52514e;
+  --c-scrollbar-hover: #6a6966;
+  --c-text: #d4d2cc;
+  --fg: #d4d2cc;
+  /* Consider adding --c-ui-bg: #3D3C3A; for dark mode UI elements */
 }
 
 html {
