@@ -11,6 +11,21 @@ import { FEATURES } from '../src/config'
 
 import type { SatoriOptions } from 'satori'
 import type { BgType } from '../src/types'
+import type { Plugin } from 'unified'
+import type { Root } from 'mdast'
+import type { MarkdownVFile } from '@astrojs/markdown-remark'
+
+interface AstroFrontmatter {
+  title?: string
+  draft?: boolean
+  redirect?: string
+  ogImage?: string | boolean
+  bgType?: BgType
+}
+
+interface AstroData {
+  frontmatter: AstroFrontmatter
+}
 
 const Inter = readFileSync('plugins/og-template/Inter-Regular-24pt.ttf')
 
@@ -59,6 +74,9 @@ async function generateOgImage(
       `${chalk.black(getCurrentFormattedTime())} ${chalk.red(`[ERROR] Failed to generate og image for '${basename(output)}.'`)}`
     )
     console.error(e)
+    
+    // Re-throw error to allow calling code to handle it appropriately
+    throw new Error(`Failed to generate OG image for '${basename(output)}': ${e instanceof Error ? e.message : String(e)}`)
   }
 }
 
@@ -67,16 +85,16 @@ async function generateOgImage(
  *
  * @see https://github.com/vfile/vfile
  */
-function remarkGenerateOgImage() {
+function remarkGenerateOgImage(): Plugin<[], Root> | undefined {
   // get config
   const ogImage = FEATURES.ogImage
   if (!(Array.isArray(ogImage) && ogImage[0])) return
 
   const { authorOrBrand, fallbackTitle, fallbackBgType } = ogImage[1]
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  return async (_tree, file) => {
+  return async (_tree: Root, file: MarkdownVFile) => {
+    // Type assertion for file.data.astro
+    const astroData = file.data.astro as AstroData
     // regenerate fallback
     if (!checkFileExistsInDir('public/og-images', 'og-image.png')) {
       await generateOgImage(
@@ -93,21 +111,21 @@ function remarkGenerateOgImage() {
       return
 
     // check draft & redirect
-    const draft = file.data.astro.frontmatter.draft
-    const redirect = file.data.astro.frontmatter.redirect
+    const draft = astroData.frontmatter.draft
+    const redirect = astroData.frontmatter.redirect
     if (draft || redirect) return
 
     // check if it need to be skipped
-    const title = file.data.astro.frontmatter.title
+    const title = astroData.frontmatter.title
     if (!title || !title.trim().length) return
-    const ogImage = file.data.astro.frontmatter.ogImage
+    const ogImage = astroData.frontmatter.ogImage
     if (ogImage === false) return
 
     // check if it has been generated
     const extname = file.extname
     const dirpath = file.dirname
     let nameWithoutExt = basename(filename, extname)
-    if (nameWithoutExt === 'index') nameWithoutExt = basename(dirpath)
+    if (nameWithoutExt === 'index') nameWithoutExt = basename(dirpath || '')
     if (checkFileExistsInDir('public/og-images', `${nameWithoutExt}.png`))
       return
 
@@ -131,7 +149,7 @@ function remarkGenerateOgImage() {
     }
 
     // get bgType
-    const pageBgType = file.data.astro.frontmatter.bgType
+    const pageBgType = astroData.frontmatter.bgType
     const bgType = pageBgType || fallbackBgType
 
     // generate og images

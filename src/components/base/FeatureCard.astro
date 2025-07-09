@@ -13,10 +13,10 @@ interface Props {
 const { title, description, features } = Astro.props
 ---
 
-<div class="p-6 border-1 border-[#87867F] dark:border-gray-800">
+<div class="p-6 border-1 border-[var(--c-border)]">
   <div class="mb-6">
     <div class="!mt-0 !mb-2 font-mono text-sm not-prose">{title}</div>
-    <p class="!mt-0 text-gray-600 dark:text-gray-400 font-mono text-sm">
+    <p class="!mt-0 text-[var(--c-text-light)] font-mono text-sm">
       {description}
     </p>
   </div>

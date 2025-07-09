@@ -2,21 +2,6 @@ import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
-
 export default function AlbumDisplay({ album, isMobile }) {
   const containerRef = useRef(null)
   const sceneRef = useRef(null)
@@ -45,8 +30,15 @@ export default function AlbumDisplay({ album, isMobile }) {
     sceneRef.current = scene
 
     // Create a MutationObserver to watch for theme changes
-    const observer = new MutationObserver(() => {
-      if (sceneRef.current) {
+    const observer = new MutationObserver((mutations) => {
+      // Only update if the class attribute actually changed
+      const classChange = mutations.some(mutation => 
+        mutation.type === 'attributes' && 
+        mutation.attributeName === 'class' &&
+        mutation.target.classList.contains('dark') !== mutation.oldValue?.includes('dark')
+      )
+      
+      if (classChange && sceneRef.current) {
         sceneRef.current.background = new THREE.Color(getThemeBackgroundColor())
       }
     })
@@ -55,6 +47,7 @@ export default function AlbumDisplay({ album, isMobile }) {
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['class'],
+      attributeOldValue: true,
     })
 
     // Initialize camera with responsive viewSize
@@ -260,11 +253,6 @@ export default function AlbumDisplay({ album, isMobile }) {
     albumMesh.position.set(0, 0, 0)
     // Use fixed scale of 1
     albumMesh.scale.set(1, 1, 1)
-    console.log('Final album scale:', {
-      x: 1,
-      y: 1,
-      z: 1,
-    })
 
     scene.add(albumMesh)
     albumMeshRef.current = albumMesh
@@ -403,7 +391,26 @@ export default function AlbumDisplay({ album, isMobile }) {
           containerRef.current.removeChild(renderer.domElement)
         }
       }
+      
+      // Properly dispose of Three.js resources
+      scene.traverse((child) => {
+        if (child.geometry) {
+          child.geometry.dispose()
+        }
+        if (child.material) {
+          if (Array.isArray(child.material)) {
+            child.material.forEach((material) => material.dispose())
+          } else {
+            child.material.dispose()
+          }
+        }
+        if (child.texture) {
+          child.texture.dispose()
+        }
+      })
+      
       scene.clear()
+      renderer.dispose()
     }
   }, [album, isMobile])
 

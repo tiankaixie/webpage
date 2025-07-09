@@ -80,6 +80,16 @@ export default defineConfig({
       ([_, color]) =>
         `px-2.5 py-1 border border-[#8884]! rounded op-50 transition-all duration-200 ease-out no-underline! hover:(op-100 text-${color} bg-${color}/10)`,
     ],
+    // Theme-consistent shortcuts
+    ['card-border', 'border-1 border-[var(--c-border)]'],
+    ['ui-bg', 'bg-[var(--c-ui-bg)]'],
+    ['ui-bg-hover', 'hover:bg-[var(--c-ui-bg-hover)]'],
+    ['ui-bg-secondary', 'bg-[var(--c-ui-bg-secondary)]'],
+    ['theme-link', 'text-[var(--c-link)] hover:text-[var(--c-link-hover)]'],
+    ['theme-text', 'text-[var(--c-text)]'],
+    ['theme-text-light', 'text-[var(--c-text-light)]'],
+    ['theme-text-lighter', 'text-[var(--c-text-lighter)]'],
+    ['theme-badge', 'font-mono text-xs text-[var(--c-text-light)] bg-[var(--c-ui-bg)] px-1 py-0.5 rounded'],
   ],
 
   // presets are partial configurations

@@ -14,7 +14,7 @@ interface Props {
 const { title = 'WHATS NEW', items } = Astro.props
 ---
 
-<div class="p-3 border-1 border-[#87867F] dark:border-gray-800">
+<div class="p-3 border-1 border-[var(--c-border)]">
   <div class="!mt-0 !mb-1.5 font-mono text-sm not-prose">{title}</div>
 
   <ul class="!mt-0 list-none !pl-0">
@@ -22,24 +22,24 @@ const { title = 'WHATS NEW', items } = Astro.props
       items.map((item) => (
         <li class="!mb-1.5">
           <div class="flex items-baseline gap-2 min-w-0">
-            <span class="font-mono text-xs text-gray-600 bg-[rgb(240,238,231)] dark:bg-gray-800 dark:text-gray-300 px-1 py-0.5 rounded whitespace-nowrap shrink-0">
+            <span class="font-mono text-xs text-[var(--c-text-light)] bg-[var(--c-ui-bg)] px-1 py-0.5 rounded whitespace-nowrap shrink-0">
               {item.date}
             </span>
             <div class="flex gap-3 items-baseline min-w-0 truncate">
               {item.link ? (
                 <a
                   href={item.link}
-                  class="font-mono text-sm text-blue-800 dark:text-blue-300 hover:text-[--theme-text-accent] shrink-0"
+                  class="font-mono text-sm text-[var(--c-link)] hover:text-[var(--c-link-hover)] shrink-0"
                 >
                   {item.title}
                 </a>
               ) : (
-                <span class="font-mono text-sm text-blue-800 dark:text-blue-300 shrink-0">
+                <span class="font-mono text-sm text-[var(--c-link)] shrink-0">
                   {item.title}
                 </span>
               )}
               <span
-                class="text-gray-600 dark:text-gray-400 font-mono text-sm truncate group relative cursor-help"
+                class="text-[var(--c-text-light)] font-mono text-sm truncate group relative cursor-help"
                 title={item.description}
               >
                 {item.description}
