@@ -4,16 +4,48 @@
   --c-scrollbar-hover: #bdbbaf;
   --c-text: #6b6a63;
   --fg: #6b6a63;
-  /* Consider adding --c-ui-bg: #F0EDE6; if needed for other elements */
+  
+  /* UI Element Colors */
+  --c-border: #87867F;
+  --c-ui-bg: rgb(240, 238, 231);
+  --c-ui-bg-hover: rgb(235, 233, 226);
+  --c-ui-bg-secondary: rgb(245, 243, 236);
+  
+  /* Link Colors */
+  --c-link: rgb(30, 58, 138);
+  --c-link-hover: rgb(29, 78, 216);
+  --c-link-accent: rgb(147, 51, 234);
+  
+  /* Text Hierarchy */
+  --c-text-light: rgba(107, 106, 99, 0.7);
+  --c-text-lighter: rgba(107, 106, 99, 0.5);
+  --fg-deep: #4a4943;
+  --fg-deeper: #3a3935;
 }
 
 :root.dark {
-  --c-bg: #242321;
-  --c-scrollbar: #52514e;
-  --c-scrollbar-hover: #6a6966;
+  --c-bg: #1f1e1c;
+  --c-scrollbar: #4a4845;
+  --c-scrollbar-hover: #5a5750;
   --c-text: #d4d2cc;
   --fg: #d4d2cc;
-  /* Consider adding --c-ui-bg: #3D3C3A; for dark mode UI elements */
+  
+  /* UI Element Colors */
+  --c-border: #5a5750;
+  --c-ui-bg: #2d2c2a;
+  --c-ui-bg-hover: #3a3935;
+  --c-ui-bg-secondary: #252422;
+  
+  /* Link Colors */
+  --c-link: rgb(147, 197, 253);
+  --c-link-hover: rgb(96, 165, 250);
+  --c-link-accent: rgb(196, 181, 253);
+  
+  /* Text Hierarchy */
+  --c-text-light: rgba(212, 210, 204, 0.7);
+  --c-text-lighter: rgba(212, 210, 204, 0.5);
+  --fg-deep: #e5e3dd;
+  --fg-deeper: #f0eee8;
 }
 
 html {

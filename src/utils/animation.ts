@@ -18,13 +18,11 @@ export function toggleFadeEffect(
   if (!element) return
 
   if (visible) {
-    // console.log('open', element)
     element.classList.remove(hiddenClass)
     if (!window.matchMedia('(prefers-reduced-motion)').matches) {
       element.classList.add('fade-in')
     }
   } else {
-    // console.log('close', element)
     if (window.matchMedia('(prefers-reduced-motion)').matches) {
       element.classList.add(hiddenClass)
       return

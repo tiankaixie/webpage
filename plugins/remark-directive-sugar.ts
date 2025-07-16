@@ -31,6 +31,21 @@ const GITHUB_USERNAME_REGEXP =
   /^@[a-zA-Z0-9](?!.*--)[a-zA-Z0-9-_]{0,37}[a-zA-Z0-9]$/
 const GITHUB_REPO_REGEXP =
   /^(?:@)?([a-zA-Z0-9](?!.*--)[a-zA-Z0-9-_]{0,37}[a-zA-Z0-9])\/.*$/
+
+// URL validation utility
+function isValidUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url)
+    return parsed.protocol === 'https:' || parsed.protocol === 'http:'
+  } catch {
+    return false
+  }
+}
+
+function sanitizeHostname(hostname: string): string {
+  // Remove any potential harmful characters and limit length
+  return hostname.replace(/[<>"/\\&]/g, '').substring(0, 253)
+}
 const LINK_STYLE = ['square', 'rounded', 'github'] as const
 const TAB_ORG_REGEXP = /^org-(\w+)$/
 const GITHUB_TAB = [
@@ -219,8 +234,12 @@ function remarkDirectiveSugar() {
           if (!id && link) {
             // non github scope
             resolvedLink = link
-            resolvedImageUrl =
-              imageUrl || `${FAVICON_BASE_URL}${new URL(resolvedLink).hostname}`
+            if (isValidUrl(resolvedLink)) {
+              const hostname = sanitizeHostname(new URL(resolvedLink).hostname)
+              resolvedImageUrl = imageUrl || `${FAVICON_BASE_URL}${hostname}`
+            } else {
+              resolvedImageUrl = imageUrl || ''
+            }
             resolvedStyle = resolvedStyle || 'square'
           } else if (id) {
             // github scope

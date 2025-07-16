@@ -77,7 +77,6 @@ frontmatter to <code>false</code> or remove it to publish the post.`
       <div
         class="font-mono p-2 sm:p-3 border-1 border-gray-200 dark:border-gray-800"
       >
-        {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
         <article
           class="prose prose-neutral dark:prose-invert prose-sm prose-pre:p-0"
         >
@@ -86,6 +85,9 @@ frontmatter to <code>false</code> or remove it to publish the post.`
       </div>
     </div>
   </StandardLayout>
+  
+  <!-- TOC positioned completely outside StandardLayout -->
+  {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
 </BaseLayout>
 
 <style>

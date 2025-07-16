@@ -14,7 +14,7 @@ interface Props {
 const { title = '', posts } = Astro.props
 ---
 
-<div class="p-3 border-1 border-gray-200 dark:border-gray-800">
+<div class="p-3 border-1 border-[var(--c-border)]">
   {
     title && (
       <div class="!mt-0 !mb-1.5 font-mono text-sm not-prose">{title}</div>
@@ -30,12 +30,12 @@ const { title = '', posts } = Astro.props
               <div class="flex items-center">
                 <a
                   href={`/blog/${post.slug}`}
-                  class="font-mono text-sm text-blue-800 dark:text-blue-300 hover:text-[--theme-text-accent] truncate"
+                  class="font-mono text-sm text-[var(--c-link)] hover:text-[var(--c-link-hover)] truncate"
                 >
                   {post.data.title}
                 </a>
                 <div class="dots mx-2 flex-1 h-[2px]" />
-                <span class="font-mono text-xs text-gray-600 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 px-1 py-0.5 rounded whitespace-nowrap">
+                <span class="font-mono text-xs text-[var(--c-text-light)] bg-[var(--c-ui-bg)] px-1 py-0.5 rounded whitespace-nowrap">
                   {new Date(post.data.pubDate).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'short',
@@ -45,7 +45,7 @@ const { title = '', posts } = Astro.props
               </div>
               {post.data.description && (
                 <div class="mt-1">
-                  <span class="text-gray-600 dark:text-gray-400 font-mono text-sm truncate block">
+                  <span class="text-[var(--c-text-light)] font-mono text-sm truncate block">
                     {post.data.description}
                   </span>
                 </div>
@@ -67,18 +67,11 @@ const { title = '', posts } = Astro.props
   .dots {
     background-image: radial-gradient(
       circle at center,
-      rgb(209 213 219) 1px,
+      var(--c-border) 1px,
       transparent 1px
     );
     background-size: 4px 4px;
     background-position: center;
-  }
-
-  :global(.dark) .dots {
-    background-image: radial-gradient(
-      circle at center,
-      rgb(75 85 99) 1px,
-      transparent 1px
-    );
+    opacity: 0.6;
   }
 </style>

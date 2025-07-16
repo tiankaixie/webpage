@@ -108,7 +108,7 @@ html.dark .prose {
   position: fixed;
   top: 8.875rem;
   bottom: 0;
-  left: 2.05rem;
+  left: 1rem;
 
   z-index: 100;
   display: flex;
@@ -195,7 +195,7 @@ html.dark .prose {
 
 .toc-desktop-right.toc-desktop {
   left: auto;
-  right: 2rem;
+  right: 0;
 }
 
 .toc-desktop-right .toc-desktop-anchor {
@@ -220,6 +220,7 @@ html.dark .prose {
 #toc-panel [aria-current='true'] {
   opacity: 1;
 }
+
 
 /* Expressive Code */
 .expressive-code {

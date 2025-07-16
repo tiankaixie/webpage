@@ -1,19 +1,5 @@
 import React, { useState, useMemo } from 'react'
-
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
+import { MONTHS } from '../../utils/constants'
 
 export default function AlbumList({
   albums,
@@ -103,7 +89,7 @@ export default function AlbumList({
             fontFamily: 'inherit',
           }}
         >
-          {months.map((month, index) => (
+          {MONTHS.map((month, index) => (
             <option key={index + 1} value={index + 1}>
               {month}
             </option>
@@ -129,7 +115,7 @@ export default function AlbumList({
               fontSize: '13px',
             }}
           >
-            No albums found for {months[selectedMonth - 1]} {selectedYear}
+            No albums found for {MONTHS[selectedMonth - 1]} {selectedYear}
           </div>
         ) : (
           filteredAlbums.map((album) => (

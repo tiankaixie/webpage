@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 export function formatDate(d: Date | string, showYear = true) {
   const date = dayjs(d)
 
-  if (!showYear /* || date.year() === dayjs().year() */)
+  if (!showYear)
     return date.format('MMM D')
 
   return date.format('MMM D, YYYY')
