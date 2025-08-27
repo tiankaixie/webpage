@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
 import robotsTxt from 'astro-robots-txt'
-import unocss from 'unocss/astro'
+import tailwindcss from '@tailwindcss/vite'
 import astroExpressiveCode from 'astro-expressive-code'
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
@@ -16,10 +16,6 @@ export default defineConfig({
   integrations: [
     sitemap(),
     robotsTxt(),
-    unocss({
-      // https://unocss.dev/integrations/astro#style-reset
-      injectReset: true,
-    }),
     astroExpressiveCode(),
     mdx(),
     react(),
@@ -35,6 +31,7 @@ export default defineConfig({
     directRenderScript: true,
   },
   vite: {
+    plugins: [tailwindcss()],
     build: { chunkSizeWarningLimit: 1200 },
   },
 })

@@ -1,59 +1,180 @@
 ---
-title: ''
+title: 'OIGALL PROJECTS'
 subtitle: ''
-description: ''
-bgType: dot
+description: 'Independent gallery and experimental design space in Fitzroy, Melbourne'
+bgType: false
 toc: false
 ogImage: false
+hideBackLink: true
 ---
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
-import StandardLayout from '~/layouts/StandardLayout.astro'
-import RenderPost from '~/components/views/RenderPost.astro'
-import FeatureCard from '~/components/base/FeatureCard.astro'
-import NewsCard from '~/components/base/NewsCard.astro'
-import { getEntry } from 'astro:content'
-import { newsItems } from '~/data/news'
-
-{/* Get content data */}
-export const homeContent = await getEntry('home', 'index')
-export const { title: contentTitle, description: contentDesc, features } = homeContent.data
+import Link from '~/components/base/Link.astro'
+import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
 
 <BaseLayout
   title={frontmatter.title}
   description={frontmatter.description}
   bgType={frontmatter.bgType}
   ogImage={frontmatter.ogImage}
+  hideBackLink={frontmatter.hideBackLink}
 >
-  <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
-    <div slot="article" class="max-w-7xl mx-auto px-1 sm:px-4">
-      <img
-        src="/TKsm.png"
-        alt="TK's profile picture"
-        style={{
-          width: '150px',
-          height: '150px',
-          margin: '0 auto 1.5rem',
-          display: 'block',
-        }}
-      />
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-7xl mx-auto">
-        <div class="col-span-1">
-          <FeatureCard
-            title={contentTitle}
-            description={contentDesc}
-            features={features}
-          />
+  <div className="min-h-screen bg-background text-foreground -mx-3 sm:-mx-5 md:-mx-7 -my-4">
+    {/* Header */}
+    <header className="flex justify-between items-center p-4 border-b border-border">
+      <h1 className="text-lg font-bold">TIANKAI XIE</h1>
+      <nav className="flex items-center gap-4 text-sm">
+        {/*
+        <Link href="/blog" className="hover:underline">
+          BLOG
+        </Link>
+        <Link href="/projects" className="hover:underline">
+          PROJECTS
+        </Link>
+        */}
+        <ThemeSwitch />
+      </nav>
+    </header>
+
+    {/* Main Content */}
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8">
+      {/* Left Column - Contact Info */}
+      <div className="space-y-8">
+        <div>
+          <h2 className="font-bold mb-3 tracking-wide">CONTACT</h2>
+          <div className="text-sm space-y-2 text-muted-foreground">
+            <span className="block">
+              tiankaixie [at] gmail [dot] com
+            </span>
+          </div>
         </div>
-        <div class="col-span-1 md:col-span-2">
-          <NewsCard items={newsItems} />
+
+        <div>
+          <h2 className="font-bold mb-3 tracking-wide">SOCIAL</h2>
+          <div className="text-sm space-y-2 text-muted-foreground">
+            <a href="https://scholar.google.com/citations?user=iGRSrJUAAAAJ&hl=en&inst=1960582506653781529&oi=ao" className="block hover:text-foreground transition-colors">
+              Google Scholar
+            </a>
+            <a href="https://github.com/tiankaixie" className="block hover:text-foreground transition-colors">
+              GitHub
+            </a>
+            <a href="https://x.com/tiankaixie" className="block hover:text-foreground transition-colors">
+              X
+            </a>
+            <a href="https://www.instagram.com/tiankaixie" className="block hover:text-foreground transition-colors">
+              Instagram
+            </a>
+            <a href="https://www.linkedin.com/in/tiankaixie/" className="block hover:text-foreground transition-colors">
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h2 className="font-bold mb-3 tracking-wide">LINKS</h2>
+          <div className="text-sm text-muted-foreground">
+            <a href="/cv.pdf" className="block hover:text-foreground transition-colors">
+              CV
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Center Column - Manifesto */}
+      <div className="space-y-8">
+        <div>
+          <h2 className="font-bold mb-6 tracking-wide text-xl">MANIFESTO</h2>
+          <div className="text-sm space-y-6 leading-relaxed">
+            <p>
+              As an AI researcher and developer, I explore the philosophical boundary between human consciousness and artificial intelligence, seeking harmonious dialogue rather than replacement. My work emerges from the belief that technology's highest purpose lies in its invisibility—AI that enhances rather than intrudes upon human experience.
+            </p>
+            <p>
+              I work at the intersection of epistemology and interface design, creating systems that understand not merely what we do, but the underlying intentionality that gives meaning to our actions. This involves building AI that operates at the level of understanding rather than pattern recognition.
+            </p>
+            <p>
+              My vision extends toward symbiotic human-AI relationships that transcend utilitarian paradigms, where AI serves as an extension of consciousness rather than an external tool. I am working toward technologies that make us more human by creating space for meaning-making and creative expression.
+            </p>
+          </div>
+        </div>
+
+        <div className="border-t border-border pt-8">
+          <h3 className="font-bold mb-4 tracking-wide">HOW I SEE THE WORLD</h3>
+          <div className="text-sm leading-relaxed text-muted-foreground italic">
+            <div className="space-y-2 mb-4">
+              <p>"Like a tiny drop of dew, or a bubble floating in a stream;</p>
+              <p>Like a flash of lightning in a summer cloud,</p>
+              <p>Or a flickering lamp, an illusion, a phantom, or a dream.</p>
+            </div>
+            <p className="mb-4">So is all conditioned existence to be seen."</p>
+            <p className="text-xs opacity-75 not-italic">― The Buddha, The Diamond Sutra</p>
+          </div>
         </div>
       </div>
-      <RenderPost
-        pageToc={frontmatter.toc}
-        collectionType="home"
-        slug="index"
-      />
+
+      {/* Right Column - Image */}
+      <div className="lg:col-span-1">
+        <div className="aspect-[4/5] bg-muted rounded-lg overflow-hidden">
+          <img
+            src="/dennypeh_A_minimalist_art_photograph_of_a_floating_abstract_l_2ee8decc-3db1-4a17-a775-bc64d49895d7_0.gif"
+            alt="Minimalist art photograph of floating abstract forms"
+            className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+          />
+        </div>
+      </div>
     </div>
-  </StandardLayout>
+
+    {/* Collaborators & Exhibitors */}
+    {/*
+    <div className="px-8 pb-12 border-t border-border pt-12">
+      <h2 className="font-bold mb-8 tracking-wide text-xl">COLLABORATORS & EXHIBITORS 2025</h2>
+      <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-8 text-sm">
+        <div>
+          <h3 className="font-bold mb-3 tracking-wider text-xs opacity-60">A</h3>
+          <div className="space-y-2">
+            <div className="hover:text-primary transition-colors cursor-pointer">Annika Kafcaloudis</div>
+            <div className="hover:text-primary transition-colors cursor-pointer">Anna Varendorff</div>
+          </div>
+        </div>
+        <div>
+          <h3 className="font-bold mb-3 tracking-wider text-xs opacity-60">B</h3>
+          <div className="space-y-2">
+            <div className="hover:text-primary transition-colors cursor-pointer">BMDO</div>
+            <div className="hover:text-primary transition-colors cursor-pointer">BRUD</div>
+          </div>
+        </div>
+        <div>
+          <h3 className="font-bold mb-3 tracking-wider text-xs opacity-60">C</h3>
+          <div className="space-y-2">
+            <div className="hover:text-primary transition-colors cursor-pointer">Cordon Salon</div>
+            <div className="hover:text-primary transition-colors cursor-pointer">Christina Teresinski</div>
+          </div>
+        </div>
+        <div>
+          <h3 className="font-bold mb-3 tracking-wider text-xs opacity-60">D</h3>
+          <div className="space-y-2">
+            <div className="hover:text-primary transition-colors cursor-pointer">Daniel Studio</div>
+          </div>
+        </div>
+        <div>
+          <h3 className="font-bold mb-3 tracking-wider text-xs opacity-60">E</h3>
+          <div className="space-y-2">
+            <div className="hover:text-primary transition-colors cursor-pointer">Eduardo Wolfe-Alegria</div>
+          </div>
+        </div>
+        <div>
+          <h3 className="font-bold mb-3 tracking-wider text-xs opacity-60">F</h3>
+          <div className="space-y-2">
+            <div className="hover:text-primary transition-colors cursor-pointer">Future Collaborators</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    */}
+
+    {/* Footer */}
+    <footer className="flex justify-center items-center p-4 border-t border-border text-sm">
+      <span>2025 Tiankai Xie All rights reserved</span>
+    </footer>
+  </div>
 </BaseLayout>

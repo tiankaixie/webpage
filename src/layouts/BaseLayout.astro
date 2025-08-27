@@ -1,5 +1,4 @@
 ---
-import '@unocss/reset/tailwind.css'
 import '~/styles/main.css'
 import '~/styles/prose.css'
 import '~/styles/markdown.css'
@@ -63,7 +62,7 @@ const style = slideEnterAnimEnabled
     >
       Skip to content
     </Link>
-    <NavBar />
+    {Astro.url.pathname !== '/' && <NavBar />}
     <main id="main" class="px-3 sm:px-5 md:px-7 py-4">
       <slot />
       {
