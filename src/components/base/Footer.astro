@@ -1,30 +1,7 @@
 ---
-import Link from './Link.astro'
-import { SITE } from '~/config'
-
-const currentYear = new Date().getFullYear()
-
-const copyrightText = `© ${currentYear} ${SITE.author}`
+// Empty footer component
 ---
 
 <footer class="slide-enter animate-delay-1600! px-7 mt-auto mb-8">
-  <div class="max-w-7xl mx-auto px-4 op-50">
-    <div
-      class="flex lt-sm:flex-col items-center justify-center text-sm whitespace-nowrap font-mono"
-    >
-      <span>{copyrightText}</span>
-      <span class="lt-sm:hidden">&nbsp;|&nbsp;</span>
-      <span>
-        Powered by
-        <Link
-          class="op-100! color-[--fg]!"
-          href="https://github.com/lin-stephanie/astro-antfustyle-theme"
-          title="AntfuStyle on GitHub"
-          external={true}
-        >
-          Astro AntfuStyle Theme
-        </Link>
-      </span>
-    </div>
-  </div>
+  <!-- Footer content removed -->
 </footer>
