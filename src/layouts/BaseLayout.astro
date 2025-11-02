@@ -4,6 +4,7 @@ import '~/styles/prose.css'
 import '~/styles/markdown.css'
 import '~/styles/page.css'
 
+import Analytics from '@vercel/analytics/astro'
 import Head from '~/components/base/Head.astro'
 import Link from '~/components/base/Link.astro'
 import NavBar from '~/components/base/NavBar.astro'
@@ -80,6 +81,7 @@ const style = slideEnterAnimEnabled
 
     <!-- Panel Backdrop (on mobile) -->
     <Backdrop />
+    <Analytics />
 
     <!-- Progress Bar & Image Zoom -->
     <script>
