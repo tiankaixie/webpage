@@ -19,7 +19,7 @@ import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
   ogImage={frontmatter.ogImage}
   hideBackLink={frontmatter.hideBackLink}
 >
-  <div className="min-h-screen bg-background text-foreground -mx-3 sm:-mx-5 md:-mx-7 -my-4">
+  <div className="min-h-screen flex flex-col bg-background text-foreground -mx-3 sm:-mx-5 md:-mx-7 -my-4">
     {/* Header */}
     <header className="flex justify-between items-center p-4 border-b border-border">
       <h1 className="text-lg font-bold">TIANKAI XIE</h1>
@@ -182,8 +182,8 @@ import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
     */}
 
     {/* Footer */}
-    <footer className="flex justify-center items-center p-4 border-t border-border text-sm">
-      <span>2025 Tiankai Xie All rights reserved</span>
+    <footer className="mt-auto flex h-12 items-center justify-center border-t border-border px-4 text-xs sm:text-sm">
+      <span>© 2025 Tiankai Xie. All rights reserved.</span>
     </footer>
   </div>
 </BaseLayout>
