@@ -1,11 +1,11 @@
 import type { Site, Ui, Features } from './types'
 
 export const SITE: Site = {
-  website: 'https://astro-antfustyle-theme.vercel.app/',
+  website: 'https://tiankaixie.com/',
   base: '/',
   title: "TK's Homepage",
   description:
-    'A customizable, feature-rich Astro theme for blog and portfolio creation',
+    'AI researcher, developer, and builder. Working on the intersection of AI and everyday life.',
   author: 'Tiankai Xie',
   lang: 'en',
   ogLocale: 'en_US',
@@ -41,23 +41,29 @@ export const UI: Ui = {
   ],
   socialLinks: [
     {
-      link: 'https://github.com/lin-stephanie/astro-antfustyle-theme',
-      title: 'AntfuStyle on Github',
+      link: 'https://github.com/tiankaixie',
+      title: 'TK on GitHub',
       displayMode: 'alwaysIcon',
       icon: 'i-uil-github-alt',
     },
     {
-      link: 'https://x.com/astrodotbuild',
-      title: 'Astro on Twitter',
+      link: 'https://x.com/tiankaixie',
+      title: 'TK on Twitter',
       displayMode: 'alwaysIcon',
       icon: 'i-ri-twitter-x-fill',
+    },
+    {
+      link: 'https://www.linkedin.com/in/tiankaixie/',
+      title: 'TK on LinkedIn',
+      displayMode: 'alwaysIcon',
+      icon: 'i-ri-linkedin-fill',
     },
   ],
   navBarLayout: {
     left: [],
     right: [
       'internalNavs',
-      // 'socialLinks',
+      'socialLinks',
       'searchButton',
       'themeButton',
       // 'rssLink',
@@ -66,8 +72,6 @@ export const UI: Ui = {
   },
   tabbedLayoutTabs: [
     { title: 'Changelog', path: '/changelog' },
-    { title: 'AstroBlog', path: '/feeds' },
-    { title: 'AstroStreams', path: '/streams' },
   ],
   groupView: {
     maxGroupColumns: 3,
@@ -75,19 +79,12 @@ export const UI: Ui = {
   },
   githubView: {
     monorepos: [
-      'withastro/astro',
-      'withastro/starlight',
-      'lin-stephanie/astro-loaders',
+      'tiankaixie/webpage',
+      'tiankaixie/dotfiles',
+      'tiankaixie/fui.nvim',
     ],
-    mainLogoOverrides: [
-      [/starlight/, 'https://starlight.astro.build/favicon.svg'],
-    ],
-    subLogoMatches: [
-      [/theme/, 'i-unjs-theme-colors'],
-      [/github/, 'https://www.svgrepo.com/show/475654/github-color.svg'],
-      [/tweet/, 'i-logos-twitter'],
-      [/bluesky/, 'i-logos-bluesky'],
-    ],
+    mainLogoOverrides: [],
+    subLogoMatches: [],
   },
 }
 
@@ -100,8 +97,8 @@ export const FEATURES: Features = {
   share: [
     true,
     {
-      twitter: [true, '@ste7lin'],
-      mastodon: [true, '@ste7lin@fairy.id'],
+      twitter: [true, '@tiankaixie'],
+      mastodon: false,
       facebook: false,
       pinterest: false,
       reddit: false,
@@ -122,7 +119,7 @@ export const FEATURES: Features = {
   ogImage: [
     true,
     {
-      authorOrBrand: `${SITE.title}`,
+      authorOrBrand: 'Tiankai Xie',
       fallbackTitle: `${SITE.description}`,
       fallbackBgType: 'particle',
     },

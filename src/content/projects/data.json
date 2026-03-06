@@ -27,6 +27,14 @@
         "icon": "i-devicon:react"
       }
     ],
+    "Apps": [
+      {
+        "name": "Pattern Loom",
+        "link": "https://github.com/tiankaixie",
+        "desc": "AI-powered content creation platform",
+        "icon": "i-devicon:python"
+      }
+    ],
     "Workflow": [
       {
         "name": "fui.nvim",

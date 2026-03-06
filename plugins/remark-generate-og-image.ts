@@ -74,9 +74,11 @@ async function generateOgImage(
       `${chalk.black(getCurrentFormattedTime())} ${chalk.red(`[ERROR] Failed to generate og image for '${basename(output)}.'`)}`
     )
     console.error(e)
-    
+
     // Re-throw error to allow calling code to handle it appropriately
-    throw new Error(`Failed to generate OG image for '${basename(output)}': ${e instanceof Error ? e.message : String(e)}`)
+    throw new Error(
+      `Failed to generate OG image for '${basename(output)}': ${e instanceof Error ? e.message : String(e)}`
+    )
   }
 }
 

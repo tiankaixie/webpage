@@ -13,13 +13,7 @@ import { SITE } from './src/config'
 export default defineConfig({
   site: SITE.website,
   base: SITE.base,
-  integrations: [
-    sitemap(),
-    robotsTxt(),
-    astroExpressiveCode(),
-    mdx(),
-    react(),
-  ],
+  integrations: [sitemap(), robotsTxt(), astroExpressiveCode(), mdx(), react()],
   markdown: {
     syntaxHighlight: false,
     remarkPlugins,

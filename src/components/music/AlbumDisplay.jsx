@@ -32,12 +32,14 @@ export default function AlbumDisplay({ album, isMobile }) {
     // Create a MutationObserver to watch for theme changes
     const observer = new MutationObserver((mutations) => {
       // Only update if the class attribute actually changed
-      const classChange = mutations.some(mutation => 
-        mutation.type === 'attributes' && 
-        mutation.attributeName === 'class' &&
-        mutation.target.classList.contains('dark') !== mutation.oldValue?.includes('dark')
+      const classChange = mutations.some(
+        (mutation) =>
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'class' &&
+          mutation.target.classList.contains('dark') !==
+            mutation.oldValue?.includes('dark')
       )
-      
+
       if (classChange && sceneRef.current) {
         sceneRef.current.background = new THREE.Color(getThemeBackgroundColor())
       }
@@ -391,7 +393,7 @@ export default function AlbumDisplay({ album, isMobile }) {
           containerRef.current.removeChild(renderer.domElement)
         }
       }
-      
+
       // Properly dispose of Three.js resources
       scene.traverse((child) => {
         if (child.geometry) {
@@ -408,7 +410,7 @@ export default function AlbumDisplay({ album, isMobile }) {
           child.texture.dispose()
         }
       })
-      
+
       scene.clear()
       renderer.dispose()
     }
