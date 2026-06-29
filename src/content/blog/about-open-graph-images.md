@@ -13,7 +13,7 @@ share: true
 ogImage: true
 ---
 
-This is a guide to setup remote server development enviroment (Ubuntu LTS) use the following:
+This guide sets up a remote server development environment (Ubuntu LTS) with:
 
 ```
 1. zsh
@@ -22,7 +22,7 @@ This is a guide to setup remote server development enviroment (Ubuntu LTS) use t
 4. Docker
 ```
 
-The goal of this setup is to get rid of all dependencies that are caused by the end operating system, and hardware limitation. As long as you have a Linux-based machine, you can basically use any device to get access everything on that machine and start developing. This way, you can even use ipad to develop without any overheads of workflows such as IDEs, keymappings, environments, etc. At the same time, your code is able to run anywhere that supports docker.
+The goal is to remove dependencies caused by a specific operating system or local hardware limitation. As long as you have a Linux-based machine, you can use any device to access that machine and start developing. This means you can even use an iPad to develop without the overhead of local IDEs, key mappings, environments, etc. At the same time, your code can run anywhere that supports Docker.
 
 ## Install Zsh
 
@@ -60,7 +60,7 @@ sudo service ssh status
 
 ## Install Neovim
 
-### via appimage
+### via AppImage
 
 In `Downloads` folder
 
