@@ -1,5 +1,11 @@
 export const newsItems = [
   {
+    date: '06-29-2026',
+    title: 'New Blog Post',
+    link: '/blog/ai-slop-is-not-the-problem',
+    description: 'AI Slop Is Not the Problem',
+  },
+  {
     date: '05-26-2025',
     title: 'Changelog 0.2.1',
     link: '/changelog/0-2-1',
@@ -45,11 +51,5 @@ export const newsItems = [
     link: '#',
     description:
       '`Evaluating Loss Landscapes from a Topology Perspective`, has been accepted to NeurIPS 2024 Workshop on Scientific Methods for Understanding Deep Learning (SciForDL).',
-  },
-  {
-    date: '10-12-2024',
-    title: 'New Blog Post',
-    link: '/blog/server-development-environment',
-    description: 'Setting up Remote Server Development Environment',
   },
 ]
