@@ -19,25 +19,6 @@ export const UI: Ui = {
       displayMode: 'alwaysText',
       text: 'Blog',
     },
-    {
-      path: '/projects',
-      title: 'Projects',
-      displayMode: 'alwaysText',
-      text: 'Projects',
-    },
-    {
-      path: '/music',
-      title: 'Music',
-      displayMode: 'alwaysText',
-      text: 'Music',
-    },
-    {
-      path: '/changelog',
-      title: 'Changelog',
-      displayMode: 'iconToTextOnMobile',
-      text: 'Changelog',
-      icon: 'i-ri-draft-line',
-    },
   ],
   socialLinks: [
     {
@@ -58,7 +39,6 @@ export const UI: Ui = {
     right: [
       'internalNavs',
       // 'socialLinks',
-      'searchButton',
       'themeButton',
       // 'rssLink',
     ],
@@ -69,10 +49,6 @@ export const UI: Ui = {
     { title: 'AstroBlog', path: '/feeds' },
     { title: 'AstroStreams', path: '/streams' },
   ],
-  groupView: {
-    maxGroupColumns: 3,
-    showGroupItemColorOnHover: true,
-  },
   githubView: {
     monorepos: [
       'withastro/astro',

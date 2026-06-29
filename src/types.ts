@@ -294,14 +294,13 @@ export type SocialLink = TextSocialItem | IconSocialItem | ResponsiveSocialItem
 type NavBarComponentType =
   | 'internalNavs'
   | 'socialLinks'
-  | 'searchButton'
   | 'themeButton'
   | 'rssLink'
 
 export interface NavBarLayout {
   /**
-   * Defines which components ('internalNavs', 'socialLinks', 'searchButton',
-   * 'themeButton', 'rssLink') are positioned on the left side of the navigation bar.
+   * Defines which components ('internalNavs', 'socialLinks', 'themeButton',
+   * 'rssLink') are positioned on the left side of the navigation bar.
    *
    * @remark
    * If you want all components to appear on the right side, leave this array empty.
@@ -310,8 +309,8 @@ export interface NavBarLayout {
   left: NavBarComponentType[]
 
   /**
-   * Defines which components ('internalNavs', 'socialLinks', 'searchButton',
-   * 'themeButton', 'rssLink') are positioned on the right side of the navigation bar.
+   * Defines which components ('internalNavs', 'socialLinks', 'themeButton',
+   * 'rssLink') are positioned on the right side of the navigation bar.
    *
    * @remark
    * If you want all components to appear on the left side, leave this array empty.
@@ -342,23 +341,6 @@ interface Tab {
 }
 
 export type Tabs = [Tab, Tab, ...Tab[]]
-
-interface GroupView {
-  /**
-   * Sets the maximum number of columns displayed in the group view.
-   * Used in `src/components/views/GroupItem.astro`.
-   */
-  maxGroupColumns: 2 | 3
-
-  /**
-   * Determines whether group item icons display in color when hovered over.
-   * Used in `src/components/views/GroupView.astro` and `src/components/base/Categorizer.astro`.
-   *
-   * @description
-   * If `true`, the icon for the group item will display in its original colors on hover.
-   */
-  showGroupItemColorOnHover: boolean
-}
 
 export interface GitHubView {
   /**
@@ -416,11 +398,6 @@ export interface Ui {
    * Otherwise, required before using this layout.
    */
   tabbedLayoutTabs: false | Tabs
-
-  /**
-   * Configures the `/projects` UIs.
-   */
-  groupView: GroupView
 
   /**
    * Configures the `/releases` and `prs` UIs, used in `src/components/views/GithubView.astro`.

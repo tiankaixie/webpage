@@ -3,7 +3,7 @@ import { defineCollection, z } from 'astro:content'
 import { feedLoader } from '@ascorbic/feed-loader'
 import { githubReleasesLoader } from 'astro-loader-github-releases'
 import { githubPrsLoader } from 'astro-loader-github-prs'
-import { pageSchema, projectsSchema, streamsSchema } from './schema'
+import { pageSchema, streamsSchema } from './schema'
 
 const githubToken = import.meta.env.GITHUB_TOKEN
 
@@ -43,11 +43,6 @@ const blog = defineCollection({
     minutesRead: z.number().optional(),
     redirect: z.string().optional(),
   }),
-})
-
-const projects = defineCollection({
-  type: 'data',
-  schema: projectsSchema,
 })
 
 const changelog = defineCollection({
@@ -124,7 +119,6 @@ const home = defineCollection({
 export const collections = {
   pages,
   blog,
-  projects,
   changelog,
   streams,
   feeds,

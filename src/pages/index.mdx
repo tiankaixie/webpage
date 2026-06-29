@@ -9,8 +9,6 @@ hideBackLink: true
 ---
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
-import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
-import SearchSwitch from '~/components/widgets/SearchSwitch.astro'
 
 <BaseLayout
   title={frontmatter.title}
@@ -19,25 +17,7 @@ import SearchSwitch from '~/components/widgets/SearchSwitch.astro'
   ogImage={frontmatter.ogImage}
   hideBackLink={frontmatter.hideBackLink}
 >
-  <div class="min-h-screen flex flex-col bg-background text-foreground -mx-3 sm:-mx-5 md:-mx-7 -my-4">
-    {/* Header */}
-    <header class="flex justify-between items-center p-4 border-b border-border">
-      <h1 class="text-lg font-bold">TIANKAI XIE</h1>
-      <nav class="flex items-center gap-4 font-mono text-sm" aria-label="Main menu">
-        <a href="/blog" class="text-[var(--c-text-light)] hover:text-[var(--c-link-hover)]">
-          BLOG
-        </a>
-        <a href="/projects" class="hidden text-[var(--c-text-light)] hover:text-[var(--c-link-hover)] sm:inline">
-          PROJECTS
-        </a>
-        <a href="/music" class="hidden text-[var(--c-text-light)] hover:text-[var(--c-link-hover)] sm:inline">
-          MUSIC
-        </a>
-        <SearchSwitch />
-        <ThemeSwitch />
-      </nav>
-    </header>
-
+  <div class="min-h-[calc(100vh-65px)] flex flex-col bg-background text-foreground -mx-3 sm:-mx-5 md:-mx-7 -my-4">
     {/* Main Content */}
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8">
       {/* Left Column - Contact Info */}

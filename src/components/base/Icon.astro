@@ -12,7 +12,6 @@ interface Props {
     | 'menu'
     | 'radio'
     | 'rss'
-    | 'search'
     | 'x'
   class?: string
   id?: string
@@ -37,16 +36,6 @@ const { name, class: className = '', id, size = '1.2em', title } = Astro.props
   aria-hidden="true"
 >
   {title && <title>{title}</title>}
-  {
-    name === 'search' && (
-      <>
-        <>
-          <circle cx="11" cy="11" r="7" />
-          <path d="m20 20-4-4" />
-        </>
-      </>
-    )
-  }
   {
     name === 'arrow-up' && (
       <>

@@ -1,49 +1,26 @@
 ---
 import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
-import SearchSwitch from '~/components/widgets/SearchSwitch.astro'
-const currentPath = Astro.url.pathname
-const isHomePage = currentPath === '/'
 ---
 
 <header
-  class={`relative z-10 flex items-center ${isHomePage ? 'justify-end' : 'justify-between'} px-4 py-4`}
+  class="relative z-10 flex items-center justify-between border-b border-border p-4"
 >
-  {
-    !isHomePage && (
-      <a href="/" class="flex items-center h-8">
-        <img
-          src="/TKsm.png"
-          alt="Home"
-          class="w-8 h-8 rounded transition-transform hover:scale-110"
-        />
-      </a>
-    )
-  }
-  <nav class="flex items-center gap-4 h-8" aria-label="Main menu">
-    <div class="flex items-center gap-4 font-mono text-sm">
-      <a
-        href="/blog"
-        class="text-[var(--c-text-light)] hover:text-[var(--c-link-hover)]"
-        >BLOG</a
-      >
-      <a
-        href="/projects"
-        class="text-[var(--c-text-light)] hover:text-[var(--c-link-hover)]"
-        >PROJECTS</a
-      >
-      <a
-        href="/music"
-        class="text-[var(--c-text-light)] hover:text-[var(--c-link-hover)]"
-        >MUSIC</a
-      >
-      <a
-        href="/changelog"
-        class="hidden text-[var(--c-text-light)] hover:text-[var(--c-link-hover)] sm:inline"
-        >CHANGELOG</a
-      >
-    </div>
-    <div class="grid grid-flow-col items-center gap-4 print:opacity-0">
-      <SearchSwitch />
+  <a
+    href="/"
+    class="text-lg font-bold tracking-[-0.02em] text-foreground no-underline transition-opacity hover:opacity-60"
+    aria-label="Tiankai Xie — Home"
+  >
+    TIANKAI XIE
+  </a>
+  <nav class="flex items-center gap-4 font-mono text-sm" aria-label="Main menu">
+    <a
+      href="/blog"
+      class="text-[var(--c-text-light)] no-underline transition-colors hover:text-foreground"
+      aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}
+    >
+      BLOG
+    </a>
+    <div class="print:opacity-0">
       <ThemeSwitch />
     </div>
   </nav>

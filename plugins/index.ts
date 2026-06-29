@@ -75,11 +75,10 @@ export const rehypePlugins: RehypePlugins = [
           content += textNode.value
         })
         return {
-          'class': 'header-anchor',
-          'tabIndex': 0,
-          'ariaHidden': 'false',
-          'ariaLabel': `Link to heading: ${content}`,
-          'data-pagefind-ignore': true,
+          class: 'header-anchor',
+          tabIndex: 0,
+          ariaHidden: 'false',
+          ariaLabel: `Link to heading: ${content}`,
         }
       },
       content: {

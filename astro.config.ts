@@ -4,7 +4,6 @@ import robotsTxt from 'astro-robots-txt'
 import tailwindcss from '@tailwindcss/vite'
 import astroExpressiveCode from 'astro-expressive-code'
 import mdx from '@astrojs/mdx'
-import react from '@astrojs/react'
 
 import { remarkPlugins, rehypePlugins } from './plugins'
 import { SITE } from './src/config'
@@ -13,7 +12,7 @@ import { SITE } from './src/config'
 export default defineConfig({
   site: SITE.website,
   base: SITE.base,
-  integrations: [sitemap(), robotsTxt(), astroExpressiveCode(), mdx(), react()],
+  integrations: [sitemap(), robotsTxt(), astroExpressiveCode(), mdx()],
   markdown: {
     syntaxHighlight: false,
     remarkPlugins,

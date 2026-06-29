@@ -1,6 +1,5 @@
 ---
 import { slug } from '~/utils/common'
-import { UI } from '~/config'
 
 interface Props {
   idx?: number
@@ -10,7 +9,6 @@ interface Props {
 }
 
 const { idx, text, needId = false, wide = false } = Astro.props
-const { maxGroupColumns } = UI.groupView
 ---
 
 <div
@@ -29,7 +27,7 @@ const { maxGroupColumns } = UI.groupView
       <span
         class={`absolute top-0 text-[5em] leading-[1em] font-bold text-transparent opacity-35 [-webkit-text-stroke:1.5px_#aaa]
           max-lg:text-[4.5em] max-sm:top-2 max-sm:text-[3.6em] dark:opacity-20
-          ${maxGroupColumns === 3 ? '-left-4' : 'left-[14%] max-lg:-left-4'}`}
+          -left-4`}
       >
         {text}
       </span>
