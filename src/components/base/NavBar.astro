@@ -1,5 +1,6 @@
 ---
 import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
+import SearchSwitch from '~/components/widgets/SearchSwitch.astro'
 const currentPath = Astro.url.pathname
 const isHomePage = currentPath === '/'
 ---
@@ -30,8 +31,19 @@ const isHomePage = currentPath === '/'
         class="text-[var(--c-text-light)] hover:text-[var(--c-link-hover)]"
         >PROJECTS</a
       >
+      <a
+        href="/music"
+        class="text-[var(--c-text-light)] hover:text-[var(--c-link-hover)]"
+        >MUSIC</a
+      >
+      <a
+        href="/changelog"
+        class="hidden text-[var(--c-text-light)] hover:text-[var(--c-link-hover)] sm:inline"
+        >CHANGELOG</a
+      >
     </div>
-    <div class="grid grid-flow-col print:opacity-0">
+    <div class="grid grid-flow-col items-center gap-4 print:opacity-0">
+      <SearchSwitch />
       <ThemeSwitch />
     </div>
   </nav>

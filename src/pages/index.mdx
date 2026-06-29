@@ -9,8 +9,8 @@ hideBackLink: true
 ---
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
-import Link from '~/components/base/Link.astro'
 import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
+import SearchSwitch from '~/components/widgets/SearchSwitch.astro'
 
 <BaseLayout
   title={frontmatter.title}
@@ -23,15 +23,17 @@ import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
     {/* Header */}
     <header class="flex justify-between items-center p-4 border-b border-border">
       <h1 class="text-lg font-bold">TIANKAI XIE</h1>
-      <nav class="flex items-center gap-4 text-sm">
-        {/*
-        <Link href="/blog" class="hover:underline">
+      <nav class="flex items-center gap-4 font-mono text-sm" aria-label="Main menu">
+        <a href="/blog" class="text-[var(--c-text-light)] hover:text-[var(--c-link-hover)]">
           BLOG
-        </Link>
-        <Link href="/projects" class="hover:underline">
+        </a>
+        <a href="/projects" class="hidden text-[var(--c-text-light)] hover:text-[var(--c-link-hover)] sm:inline">
           PROJECTS
-        </Link>
-        */}
+        </a>
+        <a href="/music" class="hidden text-[var(--c-text-light)] hover:text-[var(--c-link-hover)] sm:inline">
+          MUSIC
+        </a>
+        <SearchSwitch />
         <ThemeSwitch />
       </nav>
     </header>
