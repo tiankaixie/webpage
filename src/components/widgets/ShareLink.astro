@@ -32,7 +32,7 @@ const whatsappUrl = config.whatsapp && `${whatsapp}${postUrl}`
 const emailUrl = config.email && `${email}${postUrl}`
 
 const links = [
-  { url: twitterUrl, label: 'twitter', title: 'Tweet this post' },
+  { url: twitterUrl, label: 'X', title: 'Share this post on X' },
   { url: elkUrl, label: 'mastodon', title: 'Share this post on Mastodon' },
   { url: facebookUrl, label: 'facebook', title: 'Share this post on Facebook' },
   {
@@ -61,20 +61,24 @@ const filteredLinks = links.filter(
 )
 ---
 
-<span class="font-mono opacity-50">&gt; </span>
-<span class="opacity-50">share on</span>
-{
-  filteredLinks.map((link, idx) => (
-    <>
-      <Link
-        class="!opacity-50 transition-opacity duration-300 ease-in-out hover:!opacity-75"
-        href={link.url}
-        title={link.title}
-        external={true}
-      >
-        {link.label}
-      </Link>
-      {idx < filteredLinks.length - 1 && <span class="opacity-25">/</span>}
-    </>
-  ))
-}
+<nav class="flex flex-wrap items-center gap-2" aria-label="Share article">
+  <span class="text-muted-foreground">SHARE</span>
+  <span class="text-muted-foreground">/</span>
+  {
+    filteredLinks.map((link, idx) => (
+      <>
+        <Link
+          class="text-muted-foreground transition-colors duration-200 hover:text-foreground"
+          href={link.url}
+          title={link.title}
+          external={true}
+        >
+          <span>{link.label.toUpperCase()} ↗</span>
+        </Link>
+        {idx < filteredLinks.length - 1 && (
+          <span class="text-muted-foreground">/</span>
+        )}
+      </>
+    ))
+  }
+</nav>

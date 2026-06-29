@@ -1,10 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro'
-import StandardLayout from '~/layouts/StandardLayout.astro'
-import Toc from '~/components/toc/Toc.astro'
 import Warning from '~/components/base/Warning.astro'
 import ShareLink from '~/components/widgets/ShareLink.astro'
-import { formatDate } from '~/utils/datetime'
 import { getFilteredPosts } from '~/utils/post'
 import { FEATURES } from '~/config'
 
@@ -26,13 +23,32 @@ export async function getStaticPaths() {
 const { post } = Astro.props as Props
 const { data: frontmatter } = post
 const { Content, headings, remarkPluginFrontmatter } = await post.render()
-const { share, toc } = FEATURES
+const { share } = FEATURES
 const shareEnabled = Array.isArray(share) && share[0] && frontmatter.share
+const articleHeadings = headings.filter(
+  (heading) => heading.depth >= 2 && heading.depth <= 3
+)
 
 const pubDate = frontmatter.pubDate.toISOString()
 const lastModDate = frontmatter.lastModDate
 const minutesRead =
   frontmatter.minutesRead || remarkPluginFrontmatter.minutesRead
+
+const dateFormatter = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: '2-digit',
+  timeZone: 'UTC',
+})
+
+const formatEditorialDate = (date: Date | string) => {
+  const normalizedDate =
+    typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date)
+      ? new Date(`${date}T00:00:00Z`)
+      : new Date(date)
+
+  return dateFormatter.format(normalizedDate).toUpperCase()
+}
 
 /* Exception */
 const warningHTML = `This is a draft post that will not be published
@@ -48,133 +64,255 @@ frontmatter to <code>false</code> or remove it to publish the post.`
   {lastModDate}
   hideBackLink={true}
 >
-  <StandardLayout
-    title={frontmatter.title}
-    subtitle={frontmatter.subtitle}
-    isSearchable={true}
-    isCentered={true}
+  <div
+    class="min-h-[calc(100vh-65px)] flex flex-col bg-background text-foreground -mx-3 sm:-mx-5 md:-mx-7 -my-4"
   >
-    <Fragment slot="head">
-      <div class="-mt-2 font-mono text-xs text-gray-500 dark:text-gray-400">
-        {
-          frontmatter.pubDate && (
-            <p class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
-              <time datetime={pubDate}>{formatDate(pubDate)}</time>
-              {minutesRead !== 0 && (
-                <>
-                  <span class="hidden sm:inline">·</span>
-                  <span>{minutesRead} min</span>
-                </>
-              )}
-              {lastModDate && (
-                <>
-                  <span class="hidden sm:inline">|</span>
-                  <span class="sm:hidden">•</span>
-                  <time datetime={lastModDate} class="whitespace-nowrap">
-                    Updated: {formatDate(lastModDate)}
-                  </time>
-                </>
-              )}
-            </p>
-          )
-        }
-        {frontmatter.draft && <Warning rawHTMLString={warningHTML} />}
-      </div>
-    </Fragment>
-    <div slot="article" class="max-w-2xl mx-auto px-2 sm:px-4">
-      <div
-        class="border border-gray-200 p-2 font-mono sm:p-3 dark:border-gray-800"
-      >
-        <article
-          class="prose prose-neutral dark:prose-invert prose-sm prose-pre:p-0"
+    <div
+      class="grid flex-1 content-start grid-cols-1 gap-12 p-8 lg:grid-cols-3 lg:gap-8"
+    >
+      <aside class="lg:pr-8" aria-label="Article details">
+        <a
+          href="/blog"
+          class="inline-block font-mono text-xs text-muted-foreground no-underline transition-colors hover:text-foreground"
         >
-          <Content />
-        </article>
-        {
-          shareEnabled && (
-            <div class="mt-6 border-t border-gray-200 pt-3 font-mono text-sm dark:border-gray-800">
-              <ShareLink config={share[1]} />
+          ← BLOG INDEX
+        </a>
+
+        <div class="hidden lg:mt-10 lg:block">
+          <h2 class="mb-3 text-sm font-bold tracking-wide">DOCUMENT</h2>
+          <dl class="space-y-2 font-mono text-xs text-muted-foreground">
+            <div class="flex justify-between gap-4 border-b border-border pb-2">
+              <dt>TYPE</dt>
+              <dd>FIELD NOTE</dd>
             </div>
+            <div class="flex justify-between gap-4 border-b border-border pb-2">
+              <dt>TOPIC</dt>
+              <dd>{frontmatter.platform || 'GENERAL'}</dd>
+            </div>
+          </dl>
+        </div>
+
+        {
+          frontmatter.toc && articleHeadings.length > 0 && (
+            <nav class="hidden lg:mt-10 lg:block" aria-label="Article contents">
+              <div class="mb-3 flex items-baseline justify-between gap-4">
+                <h2 class="text-sm font-bold tracking-wide">CONTENTS</h2>
+                <span class="font-mono text-xs text-muted-foreground">
+                  {String(articleHeadings.length).padStart(2, '0')}
+                </span>
+              </div>
+              <ol class="m-0 list-none space-y-2 border-t border-border pt-3 font-mono text-xs text-muted-foreground">
+                {articleHeadings.map((heading, index) => (
+                  <li class:list={{ 'pl-4': heading.depth === 3 }}>
+                    <a
+                      href={`#${heading.slug}`}
+                      class="grid grid-cols-[1.5rem_1fr] gap-2 no-underline transition-colors hover:text-foreground"
+                    >
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <span>{heading.text}</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
           )
         }
-      </div>
-    </div>
-  </StandardLayout>
+      </aside>
 
-  <!-- TOC positioned completely outside StandardLayout -->
-  {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
+      <article class="lg:col-span-2">
+        <header class="border-b border-border pb-10">
+          <p
+            class="mb-6 font-mono text-xs tracking-[0.16em] text-muted-foreground"
+          >
+            ARTICLE / {(frontmatter.platform || 'NOTES').toUpperCase()}
+          </p>
+          <h1
+            class="max-w-4xl text-4xl font-bold leading-[0.98] tracking-[-0.045em] sm:text-5xl lg:text-6xl"
+          >
+            {frontmatter.title}
+          </h1>
+          {
+            frontmatter.subtitle && (
+              <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+                {frontmatter.subtitle}
+              </p>
+            )
+          }
+
+          {frontmatter.draft && <Warning rawHTMLString={warningHTML} />}
+
+          <dl
+            class="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-y border-border py-4 font-mono text-xs sm:grid-cols-3"
+          >
+            <div>
+              <dt class="mb-1 text-muted-foreground">PUBLISHED</dt>
+              <dd>
+                <time datetime={pubDate}>
+                  {formatEditorialDate(frontmatter.pubDate)}
+                </time>
+              </dd>
+            </div>
+            <div>
+              <dt class="mb-1 text-muted-foreground">READING</dt>
+              <dd>{minutesRead !== 0 ? `${minutesRead} MIN` : '—'}</dd>
+            </div>
+            <div>
+              <dt class="mb-1 text-muted-foreground">UPDATED</dt>
+              <dd>
+                {
+                  lastModDate ? (
+                    <time datetime={lastModDate}>
+                      {formatEditorialDate(lastModDate)}
+                    </time>
+                  ) : (
+                    '—'
+                  )
+                }
+              </dd>
+            </div>
+          </dl>
+        </header>
+
+        {
+          frontmatter.toc && articleHeadings.length > 0 && (
+            <details class="border-b border-border py-4 font-mono text-xs lg:hidden">
+              <summary class="flex cursor-pointer list-none items-center justify-between text-muted-foreground">
+                <span>CONTENTS</span>
+                <span>{String(articleHeadings.length).padStart(2, '0')} +</span>
+              </summary>
+              <ol class="mt-4 list-none space-y-3 border-t border-border pt-4">
+                {articleHeadings.map((heading, index) => (
+                  <li class:list={{ 'pl-4': heading.depth === 3 }}>
+                    <a
+                      href={`#${heading.slug}`}
+                      class="grid grid-cols-[1.5rem_1fr] gap-2 text-muted-foreground no-underline transition-colors hover:text-foreground"
+                    >
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <span>{heading.text}</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </details>
+          )
+        }
+
+        <div class="editorial-prose prose mt-10 max-w-3xl sm:mt-12">
+          <Content />
+        </div>
+
+        <div
+          class="mt-16 flex max-w-3xl flex-wrap items-center justify-between gap-5 border-y border-border py-5 font-mono text-xs"
+        >
+          <a
+            href="/blog"
+            class="text-muted-foreground no-underline transition-colors hover:text-foreground"
+          >
+            ← ALL WRITING
+          </a>
+          {shareEnabled && <ShareLink config={share[1]} />}
+        </div>
+      </article>
+    </div>
+
+    <footer
+      class="mt-16 flex h-12 items-center justify-center border-t border-border px-4 text-xs sm:text-sm"
+    >
+      <span
+        >© {new Date().getFullYear()} Tiankai Xie. All rights reserved.</span
+      >
+    </footer>
+  </div>
 </BaseLayout>
 
 <style>
-  /* Customize article content styles */
-  :global(.prose) {
-    max-width: none;
-  }
-  :global(.prose p, .prose li) {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    line-height: 1.6;
-    margin-top: 0.75em;
-    margin-bottom: 0.75em;
-  }
-  :global(.prose h1) {
-    font-family: var(--font-mono);
-    font-size: 1.25rem;
-    line-height: 1.4;
-    margin-top: 1.5em;
-    margin-bottom: 0.75em;
-  }
-  :global(.prose h2) {
-    font-family: var(--font-mono);
-    font-size: 1.1rem;
-    line-height: 1.4;
-    margin-top: 1.5em;
-    margin-bottom: 0.75em;
-  }
-  :global(.prose h3, .prose h4, .prose h5, .prose h6) {
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    line-height: 1.4;
-    margin-top: 1.5em;
-    margin-bottom: 0.75em;
-  }
-  :global(.prose code) {
-    font-family: var(--font-mono);
-    font-size: 0.8rem !important;
-    background-color: rgb(243 244 246);
-    padding: 0.2em 0.4em;
-    border-radius: 0.25em;
-  }
-  :global(.dark .prose code) {
-    background-color: rgb(31 41 55);
-  }
-  :global(.prose pre) {
-    margin: 1em 0;
-    padding: 1em;
-    background-color: rgb(243 244 246) !important;
-  }
-  :global(.dark .prose pre) {
-    background-color: rgb(31 41 55) !important;
-  }
-  :global(.prose pre code) {
-    font-size: 0.75rem !important;
-    line-height: 1.5;
-    background-color: transparent;
-    padding: 0;
-    border-radius: 0;
-    color: inherit;
-  }
-  /* Override Shiki theme background */
-  :global(.prose pre:not([class*='language-'])) {
-    background-color: rgb(243 244 246) !important;
-  }
-  :global(.dark .prose pre:not([class*='language-'])) {
-    background-color: rgb(31 41 55) !important;
+  :global(.editorial-prose) {
+    max-width: 48rem;
+    color: var(--color-foreground);
+    font-size: clamp(1rem, 0.95rem + 0.18vw, 1.08rem);
+    line-height: 1.8;
   }
 
-  /* Add styles for the title and date spacing */
-  :global(.prose h1:first-of-type) {
-    margin-top: 0;
-    margin-bottom: 0.5em;
+  :global(.editorial-prose > p:first-child) {
+    font-size: 1.12em;
+    line-height: 1.75;
+  }
+
+  :global(.editorial-prose p),
+  :global(.editorial-prose li) {
+    font-family: var(--font-sans);
+  }
+
+  :global(.editorial-prose h2) {
+    scroll-margin-top: 2rem;
+    margin-top: 3.5rem;
+    margin-bottom: 1rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-size: clamp(1.55rem, 1.4rem + 0.6vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  :global(.editorial-prose h3),
+  :global(.editorial-prose h4),
+  :global(.editorial-prose h5),
+  :global(.editorial-prose h6) {
+    scroll-margin-top: 2rem;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+
+  :global(.editorial-prose code) {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+
+  :global(.editorial-prose pre) {
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    background: var(--color-muted) !important;
+  }
+
+  :global(.editorial-prose .expressive-code) {
+    margin: 1.75rem 0;
+  }
+
+  :global(.editorial-prose .expressive-code figure) {
+    border: 1px solid var(--color-border);
+    border-radius: 0 !important;
+    box-shadow: none;
+  }
+
+  :global(.editorial-prose .expressive-code .frame),
+  :global(.editorial-prose .expressive-code pre) {
+    border-radius: 0 !important;
+  }
+
+  :global(.editorial-prose blockquote) {
+    margin-left: 0;
+    border-left: 1px solid var(--color-foreground);
+    padding: 0.25rem 0 0.25rem 1.5rem;
+  }
+
+  :global(.editorial-prose img),
+  :global(.editorial-prose video) {
+    border-radius: 0;
+  }
+
+  :global(.editorial-prose a.header-anchor) {
+    font-family: var(--font-mono);
+  }
+
+  @media (max-width: 39.999rem) {
+    :global(.editorial-prose h2) {
+      margin-top: 3rem;
+    }
   }
 </style>

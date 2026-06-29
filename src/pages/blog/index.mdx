@@ -2,18 +2,22 @@
 title: 'Blog'
 description: ''
 subtitle: ''
-bgType: dot
+bgType: false
 toc: false
 ogImage: false
 hideBackLink: true
 ---
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
-import StandardLayout from '~/layouts/StandardLayout.astro'
 import BlogCard from '~/components/base/BlogCard.astro'
 import { getCollection } from 'astro:content'
 
-export const posts = await getCollection('blog')
+export const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+export const archiveStart = posts.length
+  ? Math.min(...posts.map((post) => post.data.pubDate.getUTCFullYear()))
+  : new Date().getUTCFullYear()
 
 <BaseLayout
   title={frontmatter.title}
@@ -22,15 +26,51 @@ export const posts = await getCollection('blog')
   ogImage={frontmatter.ogImage}
   hideBackLink={frontmatter.hideBackLink}
 >
-  <StandardLayout
-    title={frontmatter.title}
-    subtitle={frontmatter.subtitle}
-    isCentered={true}
-  >
-    <div slot="article" class="max-w-4xl mx-auto px-1 sm:px-4 lg:px-8">
-      <div class="font-mono">
-        <BlogCard posts={posts} title="" />
-      </div>
+  <div class="min-h-[calc(100vh-65px)] flex flex-col bg-background text-foreground -mx-3 sm:-mx-5 md:-mx-7 -my-4">
+    <div class="grid flex-1 content-start grid-cols-1 gap-12 p-8 lg:grid-cols-3 lg:gap-8">
+      <aside class="space-y-8 lg:pr-8" aria-label="Blog index details">
+        <div>
+          <h2 class="mb-3 text-sm font-bold tracking-wide">INDEX</h2>
+          <dl class="space-y-2 font-mono text-xs text-muted-foreground">
+            <div class="flex justify-between gap-4 border-b border-border pb-2">
+              <dt>ENTRIES</dt>
+              <dd>{String(posts.length).padStart(2, '0')}</dd>
+            </div>
+            <div class="flex justify-between gap-4 border-b border-border pb-2">
+              <dt>ARCHIVE</dt>
+              <dd>{archiveStart}—NOW</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div>
+          <h2 class="mb-3 text-sm font-bold tracking-wide">SUBJECTS</h2>
+          <p class="max-w-52 text-sm leading-relaxed text-muted-foreground">
+            Systems, intelligence, tools, and the ideas that connect them.
+          </p>
+        </div>
+      </aside>
+
+      <section class="lg:col-span-2" aria-labelledby="blog-title">
+        <header class="border-b border-border pb-8">
+          <p class="mb-5 font-mono text-xs tracking-[0.16em] text-muted-foreground">
+            FIELD NOTES / WRITING
+          </p>
+          <h1 id="blog-title" class="text-4xl font-bold tracking-[-0.04em] sm:text-5xl">
+            BLOG
+          </h1>
+          <p class="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+            Notes on building, thinking, and the systems that shape how we work.
+          </p>
+        </header>
+
+        <BlogCard posts={posts} />
+      </section>
     </div>
-  </StandardLayout>
+
+    <footer class="flex h-12 items-center justify-center border-t border-border px-4 text-xs sm:text-sm">
+      <span>© {new Date().getFullYear()} Tiankai Xie. All rights reserved.</span>
+    </footer>
+
+  </div>
 </BaseLayout>

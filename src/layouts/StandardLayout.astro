@@ -2,16 +2,10 @@
 interface Props {
   title?: string
   subtitle?: string
-  isSearchable?: boolean
   isCentered?: boolean
 }
 
-const {
-  title,
-  subtitle,
-  isSearchable = false,
-  isCentered = false,
-} = Astro.props
+const { title, subtitle, isCentered = false } = Astro.props
 ---
 
 <header
@@ -20,18 +14,7 @@ const {
     'text-center': isCentered,
   }}
 >
-  {
-    title && (
-      <h1
-        class="font-mono"
-        data-pagefind-body={isSearchable ? true : undefined}
-        data-pagefind-weight={isSearchable ? '10' : undefined}
-        data-pagefind-meta={isSearchable ? 'title' : undefined}
-      >
-        {title}
-      </h1>
-    )
-  }
+  {title && <h1 class="font-mono">{title}</h1>}
   {
     subtitle && (
       <p class="!mt-[-1rem] font-mono italic opacity-50">{subtitle}</p>
@@ -41,10 +24,7 @@ const {
 </header>
 {
   Astro.slots.has('article') && (
-    <article
-      class="slide-enter-content max-w-7xl mx-auto pt-2"
-      data-pagefind-body={isSearchable ? true : undefined}
-    >
+    <article class="slide-enter-content max-w-7xl mx-auto pt-2">
       <slot name="article" />
     </article>
   )
