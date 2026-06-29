@@ -1,10 +1,10 @@
 import type { GitHubView } from '~/types'
 
 export const VERSION_COLOR = {
-  major: 'bg-rose:15 text-rose-7 dark:text-rose-3',
-  minor: 'bg-purple:15 text-purple-7 dark:text-purple-3',
-  patch: 'bg-green:15 text-green-7 dark:text-green-3',
-  pre: 'bg-teal:15 text-teal-7 dark:text-teal-3',
+  major: 'bg-rose-500/15 text-rose-700 dark:text-rose-300',
+  minor: 'bg-purple-500/15 text-purple-700 dark:text-purple-300',
+  patch: 'bg-green-500/15 text-green-700 dark:text-green-300',
+  pre: 'bg-teal-500/15 text-teal-700 dark:text-teal-300',
 }
 
 /**

@@ -12,29 +12,28 @@ const { maxGroupColumns } = UI.groupView
 ---
 
 <div
-  class={`grid gap-3 cols-[repeat(auto-fill,minmax(350px,1fr))]
-    py-8 mx-auto lt-lgp:max-w-[712px]! lt-md:max-w-[350px]!`}
+  class="mx-auto grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-3 py-8 max-lgp:!max-w-[712px] max-md:!max-w-[350px]"
   style={`max-width: calc(350px * ${maxGroupColumns} + ${maxGroupColumns - 1} * 0.75rem);`}
 >
   {
     items.map((item, _) => (
       <Link
-        class={`link relative flex items-center
-          w-[350px] max-w-full px-3.5 pt-2 pb-3.5 rounded-md
+        class="link relative flex w-[350px] max-w-full items-center rounded-md
+          bg-transparent px-3.5 pt-2 pb-3.5
           bg-transparent hover:bg-[#88888811]
-          text-4.4 transition-all duration-300`}
+          text-[1.1rem] transition-all duration-300"
         href={item.link}
         aria-hidden={true}
         external={true}
       >
-        <div class="pt-2 pr-5">
-          <div
-            class={`icon op-50 saturate-0 leading-9 text-7.5 ${item.icon}`}
-          />
+        <div class="pt-2 pr-5" aria-hidden="true">
+          <div class="grid size-9 place-items-center border border-current font-mono text-xs opacity-40">
+            {item.name.slice(0, 2).toUpperCase()}
+          </div>
         </div>
         <div class="flex-auto">
           <div>{item.name}</div>
-          <div class="op-50 text-sm font-normal">{item.desc}</div>
+          <div class="text-sm font-normal opacity-50">{item.desc}</div>
         </div>
       </Link>
     ))

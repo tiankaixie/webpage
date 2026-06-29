@@ -4,7 +4,7 @@
 .github-item-content h3,
 .github-item-content h4,
 .github-item-content h5 {
-  --uno: 'text-1em lt-sm:text-sm';
+  font-size: 1em;
 }
 
 .github-item-content > :first-child {
@@ -19,6 +19,13 @@
   font-size: 0.875em;
 }
 
-.github-item-content li {
-  --uno: 'lt-sm:text-sm';
+@media (max-width: 39.999rem) {
+  .github-item-content h1,
+  .github-item-content h2,
+  .github-item-content h3,
+  .github-item-content h4,
+  .github-item-content h5,
+  .github-item-content li {
+    font-size: 0.875rem;
+  }
 }

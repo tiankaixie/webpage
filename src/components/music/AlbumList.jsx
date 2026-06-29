@@ -13,11 +13,14 @@ export default function AlbumList({
     return uniqueYears.sort((a, b) => b - a) // Sort descending
   }, [albums])
 
+  const defaultYear = years[0] ?? new Date().getFullYear()
+  const defaultMonth =
+    albums.find((album) => album.year === defaultYear)?.month ??
+    new Date().getMonth() + 1
+
   // State for filters
-  const [selectedYear, setSelectedYear] = useState(
-    years.length > 0 ? years[0] : new Date().getFullYear()
-  )
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1) // 1-12
+  const [selectedYear, setSelectedYear] = useState(defaultYear)
+  const [selectedMonth, setSelectedMonth] = useState(defaultMonth)
 
   // Filter albums based on selected year and month
   const filteredAlbums = useMemo(() => {
@@ -28,7 +31,7 @@ export default function AlbumList({
 
   return (
     <div
-      className="border-1 border-gray-200 dark:border-gray-800"
+      className="border border-gray-200 dark:border-gray-800"
       style={{
         width: isMobile ? '100%' : '50%',
         height: isMobile ? 'auto' : '100%',
@@ -121,21 +124,19 @@ export default function AlbumList({
           filteredAlbums.map((album) => (
             <div
               key={album.id}
+              className="hover:bg-[var(--c-ui-bg-hover)]"
               onClick={() => onSelectAlbum(album)}
               style={{
-                'cursor': 'pointer',
-                'padding': '8px',
-                'backgroundColor':
+                cursor: 'pointer',
+                padding: '8px',
+                backgroundColor:
                   selectedAlbum?.id === album.id
-                    ? 'var(--c-bg-hover)'
+                    ? 'var(--c-ui-bg-hover)'
                     : 'transparent',
-                'display': 'flex',
-                'gap': '12px',
-                'alignItems': 'center',
-                'transition': 'background-color 0.2s ease',
-                ':hover': {
-                  backgroundColor: 'var(--c-bg-hover)',
-                },
+                display: 'flex',
+                gap: '12px',
+                alignItems: 'center',
+                transition: 'background-color 0.2s ease',
               }}
             >
               <img

@@ -15,4 +15,4 @@ export const MONTHS = [
   'December',
 ] as const
 
-export type Month = typeof MONTHS[number]
+export type Month = (typeof MONTHS)[number]

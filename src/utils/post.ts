@@ -1,5 +1,7 @@
 import { getCollection } from 'astro:content'
-import type { CollectionEntry, ContentCollectionKey } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+
+type PostCollectionKey = 'blog' | 'changelog'
 
 /**
  * Retrieves filtered posts from the specified content collection.
@@ -11,11 +13,11 @@ import type { CollectionEntry, ContentCollectionKey } from 'astro:content'
  * @returns {Promise<CollectionEntry<ContentCollectionKey>[]>}
  *  A promise that resolves to the filtered posts.
  */
-export async function getFilteredPosts(
-  contentCollectionType: ContentCollectionKey
-): Promise<CollectionEntry<ContentCollectionKey>[]> {
+export async function getFilteredPosts<K extends PostCollectionKey>(
+  contentCollectionType: K
+): Promise<CollectionEntry<K>[]> {
   return await getCollection(contentCollectionType, ({ data }) => {
-    return import.meta.env.PROD ? !data.draft : true
+    return import.meta.env.PROD && 'draft' in data ? !data.draft : true
   })
 }
 
@@ -26,8 +28,14 @@ export async function getFilteredPosts(
  * @returns {CollectionEntry<ContentCollectionKey>[]} - The sorted array of posts.
  */
 export function getSortedPosts(
-  posts: CollectionEntry<ContentCollectionKey>[]
-): CollectionEntry<ContentCollectionKey>[] {
+  posts: CollectionEntry<'blog'>[]
+): CollectionEntry<'blog'>[]
+export function getSortedPosts(
+  posts: CollectionEntry<'changelog'>[]
+): CollectionEntry<'changelog'>[]
+export function getSortedPosts(
+  posts: (CollectionEntry<'blog'> | CollectionEntry<'changelog'>)[]
+) {
   return posts.sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   )

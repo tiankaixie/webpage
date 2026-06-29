@@ -1,6 +1,7 @@
 ---
 import TocButton from '~/components/toc/TocButton.astro'
 import TocItem from '~/components/toc/TocItem.astro'
+import Icon from '~/components/base/Icon.astro'
 import { slug } from '~/utils/common'
 import { generateToc } from '~/utils/toc'
 import { FEATURES } from '~/config'
@@ -56,15 +57,14 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
       ${displayMode === 'always' ? 'toc-desktop-on' : ''}`}
       {style}
     >
-      <div
+      <Icon
+        name="menu"
         class:list={{
           'toc-desktop-anchor': true,
-          'i-ri-menu-2-fill': displayPosition === 'left',
-          'i-ri-menu-3-fill': displayPosition === 'right',
-          'op-60': displayMode === 'always',
+          'rotate-180': displayPosition === 'right',
+          'opacity-60': displayMode === 'always',
         }}
-      >
-      </div>
+      />
       <ul>
         {
           !!specHeadings.length &&

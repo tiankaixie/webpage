@@ -28,8 +28,7 @@ const isActive = (href: string) =>
 
 <nav id="nav-tabs" class="prose mx-auto mb-8" aria-label="Page sections">
   <div
-    u-flex="~ gap-3 lt-sm:(col wrap gap-1)"
-    class="mb-0 text-3xl select-none"
+    class="mb-0 flex gap-3 text-3xl select-none max-sm:flex-col max-sm:flex-wrap max-sm:gap-1"
     role="tablist"
   >
     {
@@ -37,7 +36,7 @@ const isActive = (href: string) =>
         <Link
           class:list={{
             'link': true,
-            'op-transition!': true,
+            '!transition-opacity !duration-300 !ease-in-out': true,
             'active': isActive(tab.path),
             'inactive': !isActive(tab.path),
           }}
@@ -54,7 +53,7 @@ const isActive = (href: string) =>
       ))
     }
   </div>
-  {subtitle && <p class="mt-4! op-50 italic">{subtitle}</p>}
+  {subtitle && <p class="!mt-4 italic opacity-50">{subtitle}</p>}
 </nav>
 <div class="prose mx-auto">
   <slot />

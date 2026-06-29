@@ -1,23 +1,25 @@
 ---
 import { getUrl } from '~/utils/common'
+import Icon from '~/components/base/Icon.astro'
 ---
 
 <button
   id="search-switch"
-  class="op-60 hover:op-100 op-transition"
+  class="opacity-60 transition-opacity duration-300 ease-in-out hover:opacity-100"
   title="Search"
   aria-label="Search"
 >
-  <div u-i-grommet-icons-search></div>
+  <Icon name="search" />
 </button>
 
 <div
   transition:persist
   id="search-panel"
-  class="z-200 fixed top-20 right-8
+  class="fixed top-20 right-8 z-[200]
     hidden grid grid-rows-[auto_1fr]
-    w-30rem max-h-82vh p-2 rounded-lg lt-lgp:(w-90% left-5% right-5%)
-    bg-[var(--c-bg)] shadow-c"
+    max-h-[82vh] w-[30rem] rounded-lg bg-[var(--c-bg)] p-2
+    shadow-[0_0_20px_rgb(0_0_0/0.2)] max-lgp:left-[5%] max-lgp:right-[5%] max-lgp:w-[90%]
+    dark:shadow-[0_0_30px_rgb(255_255_255/0.16)]"
 >
   <div
     id="search-bar"
@@ -25,7 +27,7 @@ import { getUrl } from '~/utils/common'
       h-10 px-3 rounded-md
       bg-muted"
   >
-    <div u-i-grommet-icons-search id="search-icon" class="op-60"></div>
+    <Icon id="search-icon" name="search" class="opacity-60" />
     <label class="sr-only" for="search-input">Search</label>
     <input
       type="search"

@@ -1,5 +1,6 @@
 ---
 import Link from './Link.astro'
+import Icon from './Icon.astro'
 import { ensureTrailingSlash, getUrl } from '~/utils/common'
 
 import type { InternalNav, SocialLink } from '~/types'
@@ -19,6 +20,12 @@ type Props =
     }
 
 const { type, item, mergeOnMobile, mobileItemType } = Astro.props
+
+const getIconName = (icon: string): 'draft' | 'github' | 'x' => {
+  if (icon.includes('github')) return 'github'
+  if (icon.includes('twitter')) return 'x'
+  return 'draft'
+}
 ---
 
 {
@@ -26,7 +33,7 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
     (mergeOnMobile ? (
       !mobileItemType ? (
         <Link
-          class="lt-md:hidden op-transition"
+          class="transition-opacity duration-300 ease-in-out max-md:hidden"
           href={getUrl(ensureTrailingSlash(item.path))}
           title={item.title}
           aria-current={
@@ -38,7 +45,7 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
           {(item.displayMode === 'alwaysIcon' ||
             item.displayMode === 'iconHiddenOnMobile' ||
             item.displayMode === 'iconToTextOnMobile') && (
-            <div class={item.icon} />
+            <Icon name={getIconName(item.icon)} />
           )}
           {(item.displayMode === 'alwaysText' ||
             item.displayMode === 'textHiddenOnMobile' ||
@@ -49,9 +56,9 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
       ) : mobileItemType === 'text' ? (
         (item.displayMode === 'alwaysText' ||
           item.displayMode === 'iconToTextOnMobile') && (
-          <li class="block py-3 border-b b-[var(--c-scrollbar)] leading-6">
+          <li class="block border-b border-[var(--c-scrollbar)] py-3 leading-6">
             <Link
-              class="block op-transition"
+              class="block transition-opacity duration-300 ease-in-out"
               href={getUrl(ensureTrailingSlash(item.path))}
               title={item.title}
               aria-current={
@@ -68,7 +75,7 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
         (item.displayMode === 'alwaysIcon' ||
           item.displayMode === 'textToIconOnMobile') && (
           <Link
-            class="block op-transition"
+            class="block transition-opacity duration-300 ease-in-out"
             href={getUrl(ensureTrailingSlash(item.path))}
             title={item.title}
             aria-current={
@@ -77,7 +84,7 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
                 : false
             }
           >
-            <div class={item.icon} />
+            <Icon name={getIconName(item.icon)} />
           </Link>
         )
       )
@@ -86,9 +93,9 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
         class={`${
           item.displayMode === 'iconHiddenOnMobile' ||
           item.displayMode === 'textHiddenOnMobile'
-            ? 'lt-md:hidden'
+            ? 'max-md:hidden'
             : ''
-        } op-transition`}
+        } transition-opacity duration-300 ease-in-out`}
         href={getUrl(ensureTrailingSlash(item.path))}
         title={item.title}
         aria-current={
@@ -103,18 +110,18 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
         )}
         {(item.displayMode === 'alwaysIcon' ||
           item.displayMode === 'iconHiddenOnMobile') && (
-          <div class={item.icon} />
+          <Icon name={getIconName(item.icon)} />
         )}
         {item.displayMode === 'textToIconOnMobile' && (
           <>
-            <span class="lt-md:hidden">{item.text}</span>
-            <div class={`md:hidden ${item.icon}`} />
+            <span class="max-md:hidden">{item.text}</span>
+            <Icon class="md:hidden" name={getIconName(item.icon)} />
           </>
         )}
         {item.displayMode === 'iconToTextOnMobile' && (
           <>
             <span class="md:hidden">{item.text}</span>
-            <div class={`lt-md:hidden ${item.icon}`} />
+            <Icon class="max-md:hidden" name={getIconName(item.icon)} />
           </>
         )}
       </Link>
@@ -125,7 +132,7 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
     (mergeOnMobile ? (
       !mobileItemType ? (
         <Link
-          class="lt-md:hidden op-transition"
+          class="transition-opacity duration-300 ease-in-out max-md:hidden"
           href={item.link}
           title={item.title}
           external={true}
@@ -133,7 +140,7 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
           {(item.displayMode === 'alwaysIcon' ||
             item.displayMode === 'iconHiddenOnMobile' ||
             item.displayMode === 'iconToTextOnMobile') && (
-            <div class={item.icon} />
+            <Icon name={getIconName(item.icon)} />
           )}
           {(item.displayMode === 'alwaysText' ||
             item.displayMode === 'textHiddenOnMobile' ||
@@ -144,18 +151,18 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
       ) : mobileItemType === 'text' ? (
         (item.displayMode === 'alwaysText' ||
           item.displayMode === 'iconToTextOnMobile') && (
-          <li class="block py-3 border-b b-[var(--c-scrollbar)] leading-6">
+          <li class="block border-b border-[var(--c-scrollbar)] py-3 leading-6">
             <Link
-              class="block op-transition"
+              class="block transition-opacity duration-300 ease-in-out"
               href={item.link}
               title={item.title}
               external={true}
             >
               <span>
                 {item.text}
-                <span
-                  u-i-carbon-arrow-up-right
-                  class="mb-2 mr--0.5 ml--1 op-50 align-middle text-xs"
+                <Icon
+                  name="external"
+                  class="mb-2 -mr-0.5 -ml-1 align-middle text-xs opacity-50"
                   title="External link"
                 />
               </span>
@@ -166,12 +173,12 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
         (item.displayMode === 'alwaysIcon' ||
           item.displayMode === 'textToIconOnMobile') && (
           <Link
-            class="block op-transition"
+            class="block transition-opacity duration-300 ease-in-out"
             href={item.link}
             title={item.title}
             external={true}
           >
-            <div class={item.icon} />
+            <Icon name={getIconName(item.icon)} />
           </Link>
         )
       )
@@ -180,9 +187,9 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
         class={`${
           item.displayMode === 'iconHiddenOnMobile' ||
           item.displayMode === 'textHiddenOnMobile'
-            ? 'lt-md:hidden'
+            ? 'max-md:hidden'
             : ''
-        } op-transition`}
+        } transition-opacity duration-300 ease-in-out`}
         href={item.link}
         title={item.title}
         external={true}
@@ -193,18 +200,18 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
         )}
         {(item.displayMode === 'alwaysIcon' ||
           item.displayMode === 'iconHiddenOnMobile') && (
-          <div class={item.icon} />
+          <Icon name={getIconName(item.icon)} />
         )}
         {item.displayMode === 'textToIconOnMobile' && (
           <>
-            <span class="lt-md:hidden">{item.text}</span>
-            <div class={`md:hidden ${item.icon}`} />
+            <span class="max-md:hidden">{item.text}</span>
+            <Icon class="md:hidden" name={getIconName(item.icon)} />
           </>
         )}
         {item.displayMode === 'iconToTextOnMobile' && (
           <>
             <span class="md:hidden">{item.text}</span>
-            <div class={`lt-md:hidden ${item.icon}`} />
+            <Icon class="max-md:hidden" name={getIconName(item.icon)} />
           </>
         )}
       </Link>

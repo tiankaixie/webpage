@@ -16,11 +16,6 @@ export default function AlbumDisplay({ album, isMobile }) {
     return rootStyle.getPropertyValue('--c-bg').trim()
   }
 
-  // Function to get responsive padding
-  const getResponsivePadding = () => {
-    return window.innerWidth >= 768 ? 28 : window.innerWidth >= 640 ? 20 : 12
-  }
-
   useEffect(() => {
     if (!containerRef.current || !album) return
 
@@ -32,12 +27,14 @@ export default function AlbumDisplay({ album, isMobile }) {
     // Create a MutationObserver to watch for theme changes
     const observer = new MutationObserver((mutations) => {
       // Only update if the class attribute actually changed
-      const classChange = mutations.some(mutation => 
-        mutation.type === 'attributes' && 
-        mutation.attributeName === 'class' &&
-        mutation.target.classList.contains('dark') !== mutation.oldValue?.includes('dark')
+      const classChange = mutations.some(
+        (mutation) =>
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'class' &&
+          mutation.target.classList.contains('dark') !==
+            mutation.oldValue?.includes('dark')
       )
-      
+
       if (classChange && sceneRef.current) {
         sceneRef.current.background = new THREE.Color(getThemeBackgroundColor())
       }
@@ -52,12 +49,6 @@ export default function AlbumDisplay({ album, isMobile }) {
 
     // Initialize camera with responsive viewSize
     const viewSize = isMobile ? 0.5 : 0.6 // Slightly smaller on mobile
-    const padding = getResponsivePadding()
-    const containerWidth = Math.min(
-      (window.innerWidth - padding * 4) / 2,
-      window.innerHeight - 200
-    )
-
     // Force container to be perfectly square and fill its parent
     containerRef.current.style.width = '100%'
     containerRef.current.style.height = '100%'
@@ -391,7 +382,7 @@ export default function AlbumDisplay({ album, isMobile }) {
           containerRef.current.removeChild(renderer.domElement)
         }
       }
-      
+
       // Properly dispose of Three.js resources
       scene.traverse((child) => {
         if (child.geometry) {
@@ -408,7 +399,7 @@ export default function AlbumDisplay({ album, isMobile }) {
           child.texture.dispose()
         }
       })
-      
+
       scene.clear()
       renderer.dispose()
     }
@@ -418,7 +409,7 @@ export default function AlbumDisplay({ album, isMobile }) {
 
   return (
     <div
-      className="border-1 border-gray-200 dark:border-gray-800"
+      className="border border-gray-200 dark:border-gray-800"
       style={{
         width: isMobile ? '100%' : '50%',
         height: isMobile ? 'auto' : '100%',

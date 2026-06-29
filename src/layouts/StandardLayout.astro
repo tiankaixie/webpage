@@ -32,7 +32,11 @@ const {
       </h1>
     )
   }
-  {subtitle && <p class="mt--4! op-50 italic font-mono">{subtitle}</p>}
+  {
+    subtitle && (
+      <p class="!mt-[-1rem] font-mono italic opacity-50">{subtitle}</p>
+    )
+  }
   <slot name="head" />
 </header>
 {
@@ -54,14 +58,14 @@ const {
 }
 {
   Astro.slots.has('wide') && (
-    <div class="max-w-300 mx-auto">
+    <div class="mx-auto max-w-[75rem]">
       <slot name="wide" />
     </div>
   )
 }
 {
   Astro.slots.has('github') && (
-    <div class="max-w-65ch mx-auto">
+    <div class="mx-auto max-w-[65ch]">
       <slot name="github" />
     </div>
   )

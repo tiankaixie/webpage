@@ -1,11 +1,11 @@
 import type { Site, Ui, Features } from './types'
 
 export const SITE: Site = {
-  website: 'https://astro-antfustyle-theme.vercel.app/',
+  website: 'https://webpage-theta-three.vercel.app/',
   base: '/',
   title: "TK's Homepage",
   description:
-    'A customizable, feature-rich Astro theme for blog and portfolio creation',
+    'Tiankai Xie explores AI research, experimental systems, writing, and selected work.',
   author: 'Tiankai Xie',
   lang: 'en',
   ogLocale: 'en_US',
@@ -41,14 +41,14 @@ export const UI: Ui = {
   ],
   socialLinks: [
     {
-      link: 'https://github.com/lin-stephanie/astro-antfustyle-theme',
-      title: 'AntfuStyle on Github',
+      link: 'https://github.com/tiankaixie',
+      title: 'Tiankai Xie on GitHub',
       displayMode: 'alwaysIcon',
       icon: 'i-uil-github-alt',
     },
     {
-      link: 'https://x.com/astrodotbuild',
-      title: 'Astro on Twitter',
+      link: 'https://x.com/tiankaixie',
+      title: 'Tiankai Xie on X',
       displayMode: 'alwaysIcon',
       icon: 'i-ri-twitter-x-fill',
     },
@@ -100,8 +100,8 @@ export const FEATURES: Features = {
   share: [
     true,
     {
-      twitter: [true, '@ste7lin'],
-      mastodon: [true, '@ste7lin@fairy.id'],
+      twitter: [true, '@tiankaixie'],
+      mastodon: false,
       facebook: false,
       pinterest: false,
       reddit: false,

@@ -8,11 +8,8 @@ const roses = [
 
 <div
   id="rose"
-  class="z--1 fixed top-0 bottom-0 left-0 right-0
-    w-full h-full
-    op-50 dark:op-100
-    pointer-events-none
-    print:hidden dark:invert"
+  aria-hidden="true"
+  class="pointer-events-none fixed inset-0 -z-10 h-full w-full opacity-50 print:hidden dark:opacity-100 dark:invert"
   style="mask-image: radial-gradient(circle, transparent, black);
     --webkit-mask-image: radial-gradient(circle, transparent, black)"
 >
@@ -20,22 +17,12 @@ const roses = [
     roses.map((rose) => (
       <div
         id={`rose-${rose.id}`}
-        class="absolute w-200px h-200px op-0 translate--50%"
+        class="rose-flower absolute h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2 opacity-0"
       >
         {Array.from({ length: rose.petals }, (_, i) => (
           <div
-            class="petal absolute left-50%
-              h-full w-full
-              transition-(transform duration-60000 ease-out) origin-bottom-center
-              before:(content-empty
-                absolute w-full h-full border-(solid 0.6 #22222260) dark:border-(solid 0.8 #88888860)
-                rounded-(tl-[50%_35%] br-[35%_50%] tr-[45%] bl-[10%])
-                bg-radial-gradient-98 dark:bg-radial-gradient-85
-                transform-rotate-[-45deg])"
-            style={{
-              'z-index': rose.petals - i,
-              'transform': `scale(${i * rose.scale}, ${i * rose.scale}) rotate(${i * rose.rotation}deg)`,
-            }}
+            class="petal"
+            style={`z-index: ${rose.petals - i}; transform: scale(${i * rose.scale}, ${i * rose.scale}) rotate(${i * rose.rotation}deg);`}
           />
         ))}
       </div>
@@ -43,22 +30,24 @@ const roses = [
   }
 </div>
 
-<script is:inline data-astro-rerun>
-  function getRandom(min, max) {
+<script>
+  function getRandom(min: number, max: number) {
     return Math.random() * (max - min) + min
   }
 
-  function getRandomPercentage(min, max) {
+  function getRandomPercentage(min: number, max: number) {
     return (Math.random() * (max - min) + min).toFixed(2) + '%'
   }
 
-  if (document.getElementById('rose')) {
+  function initRose() {
+    if (!document.getElementById('rose')) return
+
     const animateRose = (
-      roseId,
-      topRange,
-      leftRange,
-      scaleRange,
-      rotationRange
+      roseId: string,
+      topRange: [number, number],
+      leftRange: [number, number],
+      scaleRange: [number, number],
+      rotationRange: [number, number]
     ) => {
       const rose = document.getElementById(roseId)
       if (!rose) return
@@ -76,17 +65,58 @@ const roses = [
         const scaleValue = (idx + 1) * scaleBase
         const rotateValue = (idx + 1) * (r + rotationBase)
 
-        // @ts-expect-error (for Property 'style' does not exist on type 'Element'.ts(2339))
-        petal.style.transform = `scale(${scaleValue}, ${scaleValue}) rotate(${rotateValue}deg)`
+        if (petal instanceof HTMLElement) {
+          petal.style.transform = `scale(${scaleValue}, ${scaleValue}) rotate(${rotateValue}deg)`
+        }
       })
     }
 
     animateRose('rose-1', [-10, -5], [10, 20], [0.04, 0.06], [-3, 3])
     animateRose('rose-2', [80, 85], [-5, 5], [0.02, 0.04], [-3, 3])
-    if (window.width >= 640) {
+    if (window.innerWidth >= 640) {
       animateRose('rose-3', [45, 65], [85, 90], [0.05, 0.07], [-3, 3])
     } else {
       animateRose('rose-3', [45, 65], [85, 90], [0.03, 0.05], [-3, 3])
     }
   }
+
+  document.addEventListener('astro:page-load', initRose)
 </script>
+
+<style>
+  .petal {
+    position: absolute;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform-origin: bottom center;
+    transition: transform 60000ms ease-out;
+  }
+
+  .petal::before {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 0.6px solid #22222260;
+    border-radius: 50% 45% 35% 10% / 35% 45% 50% 10%;
+    background: radial-gradient(
+      ellipse at bottom left,
+      #ffffff 0%,
+      #fefefe 70%,
+      #88888855 98%
+    );
+    content: '';
+    transform: rotate(-45deg);
+  }
+
+  :global(.dark) .petal::before {
+    border-width: 0.8px;
+    border-color: #88888860;
+    background: radial-gradient(
+      ellipse at bottom left,
+      #ffffff 0%,
+      #fefefe 70%,
+      #88888855 85%
+    );
+  }
+</style>

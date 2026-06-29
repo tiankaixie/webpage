@@ -19,9 +19,9 @@ import GithubView from '~/components/views/GithubView.astro'
 >
   <StandardLayout isCentered={true} isWideMargin={true}>
     <Fragment slot="head">
-      <h1 class="ml-12 lt-sm:ml-0"
+      <h1 class="ml-12 max-sm:ml-0"
       >AstroEco is <span class="animate-pulse">Releasing...</span></h1>
-      <p class="mt--4! op-50 italic"
+      <p class="!mt-[-1rem] italic opacity-50"
       >Example: Displaying GitHub releases using <a href="https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-releases" target="_blank">astro-loader-github-releases</a></p>
     </Fragment>
     <GithubView slot="github" collectionType="releases" />

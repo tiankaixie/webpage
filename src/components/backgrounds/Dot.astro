@@ -1,96 +1,101 @@
----
-// inspired by: https://github.com/antfu/antfu.me/blob/main/src/components/ArtDots.vue
----
-
 <bg-dot
-  class="z--1 fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden dark:invert"
+  aria-hidden="true"
+  class="pointer-events-none fixed inset-0 -z-10 print:hidden"
 >
+  <canvas class="h-full w-full opacity-70 dark:opacity-45"></canvas>
 </bg-dot>
 
 <script>
-  import p5 from 'p5'
-  import type { default as P5Instance } from 'p5'
+  interface DotPoint {
+    x: number
+    y: number
+    phase: number
+    opacity: number
+  }
 
   class BgDotElement extends HTMLElement {
-    p5Instance: P5Instance | null
-
-    constructor() {
-      super()
-      this.p5Instance = null
-    }
+    #canvas: HTMLCanvasElement | null = null
+    #context: CanvasRenderingContext2D | null = null
+    #points: DotPoint[] = []
+    #animationFrame: number | null = null
+    #lastFrame = 0
+    #reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
     connectedCallback() {
-      const sketch = (p: P5Instance) => {
-        const BACKGROUND = '#fff'
-        const SCALE = 200
-        const LENGTH = 10
-        const SPACING = 15
+      this.#canvas = this.querySelector('canvas')
+      this.#context = this.#canvas?.getContext('2d') ?? null
+      if (!this.#canvas || !this.#context) return
 
-        const width = window.innerWidth
-        const height = window.innerHeight
+      this.#resize()
+      window.addEventListener('resize', this.#resize)
 
-        const existingPoints = new Set()
-        const points: { x: number; y: number; opacity: number }[] = []
-
-        function getForceOnPoint(x: number, y: number, z: number) {
-          return (p.noise(x / SCALE, y / SCALE, z) - 0.5) * 2 * p.TWO_PI
-        }
-
-        function getLength(x: number, y: number, t: number) {
-          return (p.noise(x / SCALE, y / SCALE, t * 2) + 0.5) * LENGTH
-        }
-
-        function addPoints() {
-          for (let x = -SPACING / 2; x < width + SPACING; x += SPACING) {
-            for (let y = -SPACING / 2; y < height + SPACING; y += SPACING) {
-              const id = `${x}-${y}`
-              if (existingPoints.has(id)) continue
-              existingPoints.add(id)
-              points.push({ x, y, opacity: Math.random() * 0.5 + 0.5 })
-            }
-          }
-        }
-
-        p.setup = () => {
-          p.createCanvas(width, height)
-          p.background(BACKGROUND)
-          p.frameRate(30)
-          addPoints()
-        }
-
-        p.draw = () => {
-          p.background(BACKGROUND)
-
-          const t = +new Date() / 10000
-          for (const point of points) {
-            const { x, y } = point
-            const rad = getForceOnPoint(x, y, t)
-            const length = getLength(x, y, t)
-            const nx = x + p.cos(rad) * length
-            const ny = y + p.sin(rad) * length
-            p.stroke(
-              200,
-              200,
-              200,
-              (Math.abs(p.cos(rad)) * 0.8 + 0.2) * point.opacity * 255
-            )
-            p.strokeWeight(2)
-            p.point(nx, ny)
-          }
-        }
+      if (this.#reduceMotion.matches) {
+        this.#draw(0)
+      } else {
+        this.#animationFrame = requestAnimationFrame(this.#animate)
       }
-
-      this.p5Instance = new p5(sketch, this)
     }
 
-    // after switching pages, stop the animation loop
     disconnectedCallback() {
-      if (this.p5Instance) {
-        this.p5Instance.remove()
-        this.p5Instance = null
+      window.removeEventListener('resize', this.#resize)
+      if (this.#animationFrame) cancelAnimationFrame(this.#animationFrame)
+      this.#animationFrame = null
+    }
+
+    #resize = () => {
+      if (!this.#canvas || !this.#context) return
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const width = window.innerWidth
+      const height = window.innerHeight
+      this.#canvas.width = width * dpr
+      this.#canvas.height = height * dpr
+      this.#canvas.style.width = `${width}px`
+      this.#canvas.style.height = `${height}px`
+      this.#context.setTransform(dpr, 0, 0, dpr, 0, 0)
+
+      const spacing = 18
+      this.#points = []
+      for (let x = -spacing; x < width + spacing; x += spacing) {
+        for (let y = -spacing; y < height + spacing; y += spacing) {
+          this.#points.push({
+            x,
+            y,
+            phase: (x * 0.017 + y * 0.011) % (Math.PI * 2),
+            opacity: 0.16 + ((x + y) % 7) * 0.018,
+          })
+        }
       }
+    }
+
+    #draw = (time: number) => {
+      if (!this.#canvas || !this.#context) return
+
+      const width = this.#canvas.clientWidth
+      const height = this.#canvas.clientHeight
+      const drift = time * 0.00018
+      this.#context.clearRect(0, 0, width, height)
+
+      for (const point of this.#points) {
+        const x = point.x + Math.sin(point.phase + drift) * 5
+        const y = point.y + Math.cos(point.phase * 0.7 + drift) * 5
+        this.#context.fillStyle = `rgb(105 105 105 / ${point.opacity})`
+        this.#context.beginPath()
+        this.#context.arc(x, y, 1.1, 0, Math.PI * 2)
+        this.#context.fill()
+      }
+    }
+
+    #animate = (time: number) => {
+      if (time - this.#lastFrame >= 1000 / 30) {
+        this.#lastFrame = time
+        this.#draw(time)
+      }
+      this.#animationFrame = requestAnimationFrame(this.#animate)
     }
   }
 
-  customElements.define('bg-dot', BgDotElement)
+  if (!customElements.get('bg-dot')) {
+    customElements.define('bg-dot', BgDotElement)
+  }
 </script>

@@ -3,7 +3,7 @@ import AlbumList from './AlbumList'
 import AlbumDisplay from './AlbumDisplay'
 
 export default function MusicGallery({ albums }) {
-  const [selectedAlbum, setSelectedAlbum] = useState(null)
+  const [selectedAlbum, setSelectedAlbum] = useState(albums[0] ?? null)
 
   return (
     <div
@@ -30,7 +30,7 @@ export default function MusicGallery({ albums }) {
         }}
       >
         <div
-          className="border-1 border-gray-200 dark:border-gray-800"
+          className="border border-gray-200 dark:border-gray-800"
           style={{
             width: '100%',
             display: 'flex',

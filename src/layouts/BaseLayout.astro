@@ -12,6 +12,7 @@ import BackLink from '~/components/widgets/BackLink.astro'
 import Footer from '~/components/base/Footer.astro'
 import ToTopButton from '~/components/widgets/ToTopButton.astro'
 import Backdrop from '~/components/base/Backdrop.astro'
+import Background from '~/components/backgrounds/Background.astro'
 
 import { SITE, FEATURES } from '~/config'
 import { getUrl } from '~/utils/common'
@@ -32,6 +33,7 @@ const {
   title,
   description,
   ogImage,
+  bgType,
   pubDate,
   lastModDate,
   hideBackLink = false,
@@ -51,24 +53,26 @@ const style = slideEnterAnimEnabled
   </head>
 
   <body
-    class="relative flex flex-col min-h-screen
+    class="relative isolate flex min-h-screen flex-col
       font-sans text-gray-700 dark:text-gray-200"
     data-no-sliding={!slideEnterAnimEnabled ? true : undefined}
     {style}
   >
+    {bgType && <Background type={bgType} />}
+
     <!-- Main -->
     <Link
       href="#main"
-      class="sr-only focus:(not-sr-only fixed start-1 top-1.5 op-20)"
+      class="sr-only focus:not-sr-only focus:fixed focus:start-1 focus:top-1.5 focus:z-50 focus:opacity-80"
     >
       Skip to content
     </Link>
     {Astro.url.pathname !== '/' && <NavBar />}
-    <main id="main" class="px-3 sm:px-5 md:px-7 py-4">
+    <main id="main" class="px-3 py-4 sm:px-5 md:px-7">
       <slot />
       {
         !hideBackLink && Astro.url.pathname !== getUrl('/') && (
-          <footer class="slide-enter animate-delay-1000! prose mx-auto mt-8 print:hidden">
+          <footer class="slide-enter prose mx-auto mt-8 [--enter-initial:1000ms] print:hidden">
             <slot name="share" />
             <br />
             <BackLink />

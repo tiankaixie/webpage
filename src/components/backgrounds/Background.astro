@@ -4,8 +4,10 @@ import Dot from '~/components/backgrounds/Dot.astro'
 import Rose from '~/components/backgrounds/Rose.astro'
 import Particle from '~/components/backgrounds/Particle.astro'
 
+import type { BgType } from '~/types'
+
 interface Props {
-  type: string
+  type: BgType
 }
 
 const { type } = Astro.props

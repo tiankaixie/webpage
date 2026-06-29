@@ -14,7 +14,7 @@ interface Props {
 const { title = '', posts } = Astro.props
 ---
 
-<div class="p-3 border-1 border-[var(--c-border)]">
+<div class="border border-[var(--c-border)] p-3">
   {
     title && (
       <div class="!mt-0 !mb-1.5 font-mono text-sm not-prose">{title}</div>

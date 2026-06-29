@@ -14,6 +14,7 @@ import type { BgType } from '../src/types'
 import type { Plugin } from 'unified'
 import type { Root } from 'mdast'
 import type { MarkdownVFile } from '@astrojs/markdown-remark'
+import type { ReactNode } from 'react'
 
 interface AstroFrontmatter {
   title?: string
@@ -59,7 +60,7 @@ async function generateOgImage(
     const node = ogImageMarkup(authorOrBrand, title, bgType)
     unescapeHTML(node)
 
-    const svg = await satori(node, satoriOptions)
+    const svg = await satori(node as unknown as ReactNode, satoriOptions)
 
     const compressedPngBuffer = await sharp(Buffer.from(svg))
       .png({
@@ -74,9 +75,11 @@ async function generateOgImage(
       `${chalk.black(getCurrentFormattedTime())} ${chalk.red(`[ERROR] Failed to generate og image for '${basename(output)}.'`)}`
     )
     console.error(e)
-    
+
     // Re-throw error to allow calling code to handle it appropriately
-    throw new Error(`Failed to generate OG image for '${basename(output)}': ${e instanceof Error ? e.message : String(e)}`)
+    throw new Error(
+      `Failed to generate OG image for '${basename(output)}': ${e instanceof Error ? e.message : String(e)}`
+    )
   }
 }
 
@@ -85,7 +88,7 @@ async function generateOgImage(
  *
  * @see https://github.com/vfile/vfile
  */
-function remarkGenerateOgImage(): Plugin<[], Root> | undefined {
+const remarkGenerateOgImage: Plugin<[], Root> = function () {
   // get config
   const ogImage = FEATURES.ogImage
   if (!(Array.isArray(ogImage) && ogImage[0])) return

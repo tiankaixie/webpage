@@ -1,5 +1,6 @@
 ---
 import Link from '~/components/base/Link.astro'
+import Icon from '~/components/base/Icon.astro'
 import { getUrl } from '~/utils/common'
 import { formatDate } from '~/utils/datetime'
 
@@ -32,56 +33,63 @@ const {
 
 <div class="slide-enter" style={{ '--enter-stage': idx }}>
   <Link
-    class="block border-b-none! mb-6 mt-2 op-transition!"
+    class="mt-2 mb-6 block !border-b-0 !transition-opacity !duration-300 !ease-in-out"
     href={redirect ?? getUrl(`/${collectionType}/${postSlug}/`)}
     external={redirect ? true : false}
   >
     <li
-      u-flex="~ items-center gap-2 lt-md:(col items-start)"
-      class="no-underline"
+      class="flex items-center gap-2 no-underline max-md:flex-col max-md:items-start"
     >
-      <div class="text-lg leading-1.2em">
+      <div class="text-lg leading-[1.2em]">
         <span class="align-middle"
           >{title}
           {
             redirect && (
-              <span
-                u-i-carbon-arrow-up-right
-                class="mb-2 mr--0.5 ml--1 op-50 align-middle text-xs"
+              <Icon
+                name="external"
+                class="mb-2 -mr-0.5 -ml-1 align-middle text-xs opacity-50"
                 title="External link"
               />
             )
           }</span
         >
       </div>
-      <div flex="~ gap-2 items-center">
+      <div class="flex items-center gap-2">
         {
           video && (
-            <span
-              u-i-ri-film-line
-              class="flex-none op-50 align-middle"
+            <Icon
+              name="film"
+              class="flex-none align-middle opacity-50"
               title="Provided in video"
             />
           )
         }
         {
           radio && (
-            <span
-              u-i-ri-radio-line
-              class="flex-none op-50 align-middle"
+            <Icon
+              name="radio"
+              class="flex-none align-middle opacity-50"
               title="Provided in radio"
             />
           )
         }
-        <span class="op-50 text-sm ws-nowrap">
+        <span class="text-sm whitespace-nowrap opacity-50">
           {formatDate(date, false)}
         </span>
         {
           typeof minutesRead === 'number' && minutesRead > 0 && (
-            <span class="op-40 text-sm ws-nowrap">· {minutesRead} min</span>
+            <span class="text-sm whitespace-nowrap opacity-40">
+              · {minutesRead} min
+            </span>
           )
         }
-        {platform && <span class="op-40 text-sm ws-nowrap">· {platform}</span>}
+        {
+          platform && (
+            <span class="text-sm whitespace-nowrap opacity-40">
+              · {platform}
+            </span>
+          )
+        }
       </div>
     </li>
   </Link>

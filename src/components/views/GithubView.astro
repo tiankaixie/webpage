@@ -118,7 +118,7 @@ if (collectionType === 'prs') {
 }
 ---
 
-<div class="flex flex-col gap-8 lt-sm:gap-6 mt-16.8">
+<div class="mt-[4.2rem] flex flex-col gap-8 max-sm:gap-6">
   {
     collectionType === 'releases' &&
       extendedReleases.map((item, idx) => (
@@ -152,10 +152,10 @@ if (collectionType === 'prs') {
 </div>
 
 <div
-  class="prose flex flex-col items-center mx-a op-50 text-center text-3.75! lt-sm:text-sm!"
+  class="prose mx-auto flex flex-col items-center text-center !text-[0.9375rem] opacity-50 max-sm:!text-sm"
 >
-  <hr class="mt-3em!" />
-  <p class="flex lt-sm:flex-col items-center my-0! lt-sm:my-1.5!">
+  <hr class="!mt-[3em]" />
+  <p class="!my-0 flex items-center max-sm:!my-1.5 max-sm:flex-col">
     <span>
       Last fetched:
       <time
@@ -165,26 +165,26 @@ if (collectionType === 'prs') {
         >{formatDate(new Date())}
       </time>
     </span>
-    <span class="lt-sm:hidden">&nbsp;|&nbsp;</span>
+    <span class="max-sm:hidden">&nbsp;|&nbsp;</span>
     <span>
       Scheduled refresh:
       <span class="text-[var(--fg-deeper)]">Every Saturday</span>
     </span>
   </p>
-  <p class="my-0! lt-sm:my-1.5!">
+  <p class="!my-0 max-sm:!my-1.5">
     See
     <Link
-      class="op-100!"
+      class="!opacity-100"
       href={getUrl('/blog/customizing-github-activity-pages/')}
     >
       Customizing GitHub Activity Pages
     </Link>
     to configure your own
   </p>
-  <p class="my-0! lt-sm:my-1.5!">
+  <p class="!my-0 max-sm:!my-1.5">
     Inspired by
     <Link
-      class="op-100!"
+      class="!opacity-100"
       href={collectionType === 'releases'
         ? 'https://releases.antfu.me/'
         : 'https://prs.atinux.com/'}

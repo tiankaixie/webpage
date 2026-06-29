@@ -1,140 +1,113 @@
----
-// inspired by: https://github.com/JulianLaval/canvas-particle-network
----
-
 <bg-particle
-  class="z--1 fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden dark:invert"
+  aria-hidden="true"
+  class="pointer-events-none fixed inset-0 -z-10 print:hidden"
 >
+  <canvas class="h-full w-full opacity-50 dark:opacity-30"></canvas>
 </bg-particle>
 
 <script>
-  import p5 from 'p5'
-  import type { default as P5Instance } from 'p5'
-
-  interface Particle {
+  interface ParticlePoint {
     x: number
     y: number
-    velocity: {
-      x: number
-      y: number
-    }
+    vx: number
+    vy: number
   }
 
   class BgParticleElement extends HTMLElement {
-    p5Instance: P5Instance | null
-
-    constructor() {
-      super()
-      this.p5Instance = null
-    }
+    #canvas: HTMLCanvasElement | null = null
+    #context: CanvasRenderingContext2D | null = null
+    #particles: ParticlePoint[] = []
+    #animationFrame: number | null = null
+    #lastFrame = 0
+    #reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
     connectedCallback() {
-      const sketch = (p: P5Instance) => {
-        const BACKGROUND = '#fff'
-        const COLOR = '#88888825'
-        const VELOCITY = 0.8
-        const DENSITY = 6000
-        const DISTANCE = 120
-        const INTERACTIVE = false
+      this.#canvas = this.querySelector('canvas')
+      this.#context = this.#canvas?.getContext('2d') ?? null
+      if (!this.#canvas || !this.#context) return
 
-        const width = window.innerWidth
-        const height = window.innerHeight
-        const particles: Particle[] = []
+      this.#resize()
+      window.addEventListener('resize', this.#resize)
 
-        function createParticle() {
-          const x = p.random(width)
-          const y = p.random(height)
-          const velocity = {
-            x: (p.random() - 0.5) * VELOCITY,
-            y: (p.random() - 0.5) * VELOCITY,
-          }
-
-          return { x, y, velocity }
-        }
-
-        function drawParticle(particle: Particle) {
-          p.noStroke()
-          p.fill(COLOR)
-          p.circle(particle.x, particle.y, 3)
-        }
-
-        function updateParticle(particle: Particle) {
-          // change dir if outside map
-          if (particle.x > width + 20 || particle.x < -20) {
-            particle.velocity.x = -particle.velocity.x
-          }
-          if (particle.y > height + 20 || particle.y < -20) {
-            particle.velocity.y = -particle.velocity.y
-          }
-
-          particle.x += particle.velocity.x
-          particle.y += particle.velocity.y
-        }
-
-        p.setup = () => {
-          p.createCanvas(width, height)
-          p.background(BACKGROUND)
-
-          // initialize particles
-          const particleCount = (width * height) / DENSITY
-          for (let i = 0; i < particleCount; i++) {
-            particles.push(createParticle())
-          }
-
-          if (INTERACTIVE) {
-            let mouseParticle = createParticle()
-            mouseParticle.velocity = { x: 0, y: 0 }
-            particles.push(mouseParticle)
-
-            p.mouseMoved = function () {
-              mouseParticle.x = p.mouseX
-              mouseParticle.y = p.mouseY
-            }
-
-            p.mouseReleased = function () {
-              mouseParticle.velocity = p.createVector(
-                (p.random() - 0.5) * 2,
-                (p.random() - 0.5) * 2
-              )
-              mouseParticle = createParticle()
-              mouseParticle.velocity = p.createVector(0, 0)
-              particles.push(mouseParticle)
-            }
-          }
-        }
-
-        p.draw = () => {
-          p.background(BACKGROUND)
-
-          // update and draw particles
-          particles.forEach((particle) => {
-            updateParticle(particle)
-            drawParticle(particle)
-
-            // draw connections
-            particles.forEach((other) => {
-              const d = p.dist(particle.x, particle.y, other.x, other.y)
-              if (d < DISTANCE) {
-                p.stroke(COLOR)
-                p.strokeWeight(0.5)
-                p.line(particle.x, particle.y, other.x, other.y)
-              }
-            })
-          })
-        }
+      if (this.#reduceMotion.matches) {
+        this.#draw(false)
+      } else {
+        this.#animationFrame = requestAnimationFrame(this.#animate)
       }
-
-      this.p5Instance = new p5(sketch, this)
     }
 
-    // after switching pages, stop the animation loop
     disconnectedCallback() {
-      if (this.p5Instance) {
-        this.p5Instance.remove()
-        this.p5Instance = null
+      window.removeEventListener('resize', this.#resize)
+      if (this.#animationFrame) cancelAnimationFrame(this.#animationFrame)
+      this.#animationFrame = null
+    }
+
+    #resize = () => {
+      if (!this.#canvas || !this.#context) return
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const width = window.innerWidth
+      const height = window.innerHeight
+      this.#canvas.width = width * dpr
+      this.#canvas.height = height * dpr
+      this.#canvas.style.width = `${width}px`
+      this.#canvas.style.height = `${height}px`
+      this.#context.setTransform(dpr, 0, 0, dpr, 0, 0)
+
+      const count = Math.max(28, Math.floor((width * height) / 14000))
+      this.#particles = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+      }))
+    }
+
+    #draw = (move: boolean) => {
+      if (!this.#canvas || !this.#context) return
+
+      const width = this.#canvas.clientWidth
+      const height = this.#canvas.clientHeight
+      this.#context.clearRect(0, 0, width, height)
+
+      for (const particle of this.#particles) {
+        if (move) {
+          particle.x = (particle.x + particle.vx + width) % width
+          particle.y = (particle.y + particle.vy + height) % height
+        }
+
+        this.#context.fillStyle = 'rgb(105 105 105 / 0.45)'
+        this.#context.beginPath()
+        this.#context.arc(particle.x, particle.y, 1.2, 0, Math.PI * 2)
+        this.#context.fill()
+
+        for (const other of this.#particles) {
+          const distance = Math.hypot(
+            particle.x - other.x,
+            particle.y - other.y
+          )
+          if (distance > 105) continue
+
+          this.#context.strokeStyle = `rgb(105 105 105 / ${0.11 * (1 - distance / 105)})`
+          this.#context.lineWidth = 0.6
+          this.#context.beginPath()
+          this.#context.moveTo(particle.x, particle.y)
+          this.#context.lineTo(other.x, other.y)
+          this.#context.stroke()
+        }
       }
+    }
+
+    #animate = (time: number) => {
+      if (time - this.#lastFrame >= 1000 / 30) {
+        this.#lastFrame = time
+        this.#draw(true)
+      }
+      this.#animationFrame = requestAnimationFrame(this.#animate)
     }
   }
 
-  customElements.define('bg-particle', BgParticleElement)
+  if (!customElements.get('bg-particle')) {
+    customElements.define('bg-particle', BgParticleElement)
+  }
 </script>

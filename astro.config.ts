@@ -13,13 +13,7 @@ import { SITE } from './src/config'
 export default defineConfig({
   site: SITE.website,
   base: SITE.base,
-  integrations: [
-    sitemap(),
-    robotsTxt(),
-    astroExpressiveCode(),
-    mdx(),
-    react(),
-  ],
+  integrations: [sitemap(), robotsTxt(), astroExpressiveCode(), mdx(), react()],
   markdown: {
     syntaxHighlight: false,
     remarkPlugins,
@@ -31,7 +25,9 @@ export default defineConfig({
     directRenderScript: true,
   },
   vite: {
-    plugins: [tailwindcss()],
+    // Tailwind targets Vite 6 while Astro 4 bundles Vite 5; runtime APIs are
+    // compatible, but their duplicated type identities are not.
+    plugins: [tailwindcss() as never],
     build: { chunkSizeWarningLimit: 1200 },
   },
 })
