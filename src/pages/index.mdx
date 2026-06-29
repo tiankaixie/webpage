@@ -19,16 +19,16 @@ import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
   ogImage={frontmatter.ogImage}
   hideBackLink={frontmatter.hideBackLink}
 >
-  <div className="min-h-screen flex flex-col bg-background text-foreground -mx-3 sm:-mx-5 md:-mx-7 -my-4">
+  <div class="min-h-screen flex flex-col bg-background text-foreground -mx-3 sm:-mx-5 md:-mx-7 -my-4">
     {/* Header */}
-    <header className="flex justify-between items-center p-4 border-b border-border">
-      <h1 className="text-lg font-bold">TIANKAI XIE</h1>
-      <nav className="flex items-center gap-4 text-sm">
+    <header class="flex justify-between items-center p-4 border-b border-border">
+      <h1 class="text-lg font-bold">TIANKAI XIE</h1>
+      <nav class="flex items-center gap-4 text-sm">
         {/*
-        <Link href="/blog" className="hover:underline">
+        <Link href="/blog" class="hover:underline">
           BLOG
         </Link>
-        <Link href="/projects" className="hover:underline">
+        <Link href="/projects" class="hover:underline">
           PROJECTS
         </Link>
         */}
@@ -37,43 +37,43 @@ import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
     </header>
 
     {/* Main Content */}
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8">
       {/* Left Column - Contact Info */}
-      <div className="space-y-8">
+      <div class="space-y-8">
         <div>
-          <h2 className="font-bold mb-3 tracking-wide">CONTACT</h2>
-          <div className="text-sm space-y-2 text-muted-foreground">
-            <span className="block">
+          <h2 class="font-bold mb-3 tracking-wide">CONTACT</h2>
+          <div class="text-sm space-y-2 text-muted-foreground">
+            <span class="block">
               tiankaixie [at] gmail [dot] com
             </span>
           </div>
         </div>
 
         <div>
-          <h2 className="font-bold mb-3 tracking-wide">SOCIAL</h2>
-          <div className="text-sm space-y-2 text-muted-foreground">
-            <a href="https://scholar.google.com/citations?user=iGRSrJUAAAAJ&hl=en&inst=1960582506653781529&oi=ao" className="block hover:text-foreground transition-colors">
+          <h2 class="font-bold mb-3 tracking-wide">SOCIAL</h2>
+          <div class="text-sm space-y-2 text-muted-foreground">
+            <a href="https://scholar.google.com/citations?user=iGRSrJUAAAAJ&hl=en&inst=1960582506653781529&oi=ao" class="block hover:text-foreground transition-colors">
               Google Scholar
             </a>
-            <a href="https://github.com/tiankaixie" className="block hover:text-foreground transition-colors">
+            <a href="https://github.com/tiankaixie" class="block hover:text-foreground transition-colors">
               GitHub
             </a>
-            <a href="https://x.com/tiankaixie" className="block hover:text-foreground transition-colors">
+            <a href="https://x.com/tiankaixie" class="block hover:text-foreground transition-colors">
               X
             </a>
-            <a href="https://www.instagram.com/tiankaixie" className="block hover:text-foreground transition-colors">
+            <a href="https://www.instagram.com/tiankaixie" class="block hover:text-foreground transition-colors">
               Instagram
             </a>
-            <a href="https://www.linkedin.com/in/tiankaixie/" className="block hover:text-foreground transition-colors">
+            <a href="https://www.linkedin.com/in/tiankaixie/" class="block hover:text-foreground transition-colors">
               LinkedIn
             </a>
           </div>
         </div>
 
         <div>
-          <h2 className="font-bold mb-3 tracking-wide">LINKS</h2>
-          <div className="text-sm text-muted-foreground">
-            <a href="/cv.pdf" className="block hover:text-foreground transition-colors">
+          <h2 class="font-bold mb-3 tracking-wide">LINKS</h2>
+          <div class="text-sm text-muted-foreground">
+            <a href="/cv.pdf" class="block hover:text-foreground transition-colors">
               CV
             </a>
           </div>
@@ -82,10 +82,10 @@ import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
       </div>
 
       {/* Center Column - Manifesto */}
-      <div className="space-y-8">
+      <div class="space-y-8">
         <div>
-          <h2 className="font-bold mb-6 tracking-wide text-xl">MANIFESTO</h2>
-          <div className="text-sm space-y-6 leading-relaxed">
+          <h2 class="font-bold mb-6 tracking-wide text-xl">MANIFESTO</h2>
+          <div class="text-sm space-y-6 leading-relaxed">
             <p>
               As an AI researcher and developer, I explore the philosophical boundary between human consciousness and artificial intelligence, seeking harmonious dialogue rather than replacement. My work emerges from the belief that technology's highest purpose lies in its invisibility—AI that enhances rather than intrudes upon human experience.
             </p>
@@ -98,25 +98,25 @@ import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
           </div>
         </div>
 
-        <div className="border-t border-border pt-8">
-          <h3 className="font-bold mb-4 tracking-wide">HOW I SEE THE WORLD</h3>
-          <div className="text-sm leading-relaxed text-muted-foreground italic">
-            <div className="space-y-2 mb-4">
+        <div class="border-t border-border pt-8">
+          <h3 class="font-bold mb-4 tracking-wide">HOW I SEE THE WORLD</h3>
+          <div class="text-sm leading-relaxed text-muted-foreground italic">
+            <div class="space-y-2 mb-4">
               <p>"Like a tiny drop of dew, or a bubble floating in a stream;</p>
               <p>Like a flash of lightning in a summer cloud,</p>
               <p>Or a flickering lamp, an illusion, a phantom, or a dream.</p>
             </div>
-            <p className="mb-4">So is all conditioned existence to be seen."</p>
-            <p className="text-xs opacity-75 not-italic">― The Buddha, The Diamond Sutra</p>
+            <p class="mb-4">So is all conditioned existence to be seen."</p>
+            <p class="text-xs opacity-75 not-italic">― The Buddha, The Diamond Sutra</p>
           </div>
         </div>
       </div>
 
       {/* Right Column - Image */}
-      <div className="lg:col-span-1">
-        <div className="aspect-[4/5] bg-muted rounded-lg overflow-hidden">
+      <div class="lg:col-span-1">
+        <div class="aspect-[4/5] bg-muted rounded-lg overflow-hidden">
           <video
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
             src="/social_u7212615168_similiar_to_this_animate_--ar_5877_--video_1_39153937-b54d-424d-9524-8fe12a3ef420_2.mp4"
             autoPlay
             loop
@@ -135,46 +135,46 @@ import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
 
     {/* Collaborators & Exhibitors */}
     {/*
-    <div className="px-8 pb-12 border-t border-border pt-12">
-      <h2 className="font-bold mb-8 tracking-wide text-xl">COLLABORATORS & EXHIBITORS 2025</h2>
-      <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-8 text-sm">
+    <div class="px-8 pb-12 border-t border-border pt-12">
+      <h2 class="font-bold mb-8 tracking-wide text-xl">COLLABORATORS & EXHIBITORS 2025</h2>
+      <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-8 text-sm">
         <div>
-          <h3 className="font-bold mb-3 tracking-wider text-xs opacity-60">A</h3>
-          <div className="space-y-2">
-            <div className="hover:text-primary transition-colors cursor-pointer">Annika Kafcaloudis</div>
-            <div className="hover:text-primary transition-colors cursor-pointer">Anna Varendorff</div>
+          <h3 class="font-bold mb-3 tracking-wider text-xs opacity-60">A</h3>
+          <div class="space-y-2">
+            <div class="hover:text-primary transition-colors cursor-pointer">Annika Kafcaloudis</div>
+            <div class="hover:text-primary transition-colors cursor-pointer">Anna Varendorff</div>
           </div>
         </div>
         <div>
-          <h3 className="font-bold mb-3 tracking-wider text-xs opacity-60">B</h3>
-          <div className="space-y-2">
-            <div className="hover:text-primary transition-colors cursor-pointer">BMDO</div>
-            <div className="hover:text-primary transition-colors cursor-pointer">BRUD</div>
+          <h3 class="font-bold mb-3 tracking-wider text-xs opacity-60">B</h3>
+          <div class="space-y-2">
+            <div class="hover:text-primary transition-colors cursor-pointer">BMDO</div>
+            <div class="hover:text-primary transition-colors cursor-pointer">BRUD</div>
           </div>
         </div>
         <div>
-          <h3 className="font-bold mb-3 tracking-wider text-xs opacity-60">C</h3>
-          <div className="space-y-2">
-            <div className="hover:text-primary transition-colors cursor-pointer">Cordon Salon</div>
-            <div className="hover:text-primary transition-colors cursor-pointer">Christina Teresinski</div>
+          <h3 class="font-bold mb-3 tracking-wider text-xs opacity-60">C</h3>
+          <div class="space-y-2">
+            <div class="hover:text-primary transition-colors cursor-pointer">Cordon Salon</div>
+            <div class="hover:text-primary transition-colors cursor-pointer">Christina Teresinski</div>
           </div>
         </div>
         <div>
-          <h3 className="font-bold mb-3 tracking-wider text-xs opacity-60">D</h3>
-          <div className="space-y-2">
-            <div className="hover:text-primary transition-colors cursor-pointer">Daniel Studio</div>
+          <h3 class="font-bold mb-3 tracking-wider text-xs opacity-60">D</h3>
+          <div class="space-y-2">
+            <div class="hover:text-primary transition-colors cursor-pointer">Daniel Studio</div>
           </div>
         </div>
         <div>
-          <h3 className="font-bold mb-3 tracking-wider text-xs opacity-60">E</h3>
-          <div className="space-y-2">
-            <div className="hover:text-primary transition-colors cursor-pointer">Eduardo Wolfe-Alegria</div>
+          <h3 class="font-bold mb-3 tracking-wider text-xs opacity-60">E</h3>
+          <div class="space-y-2">
+            <div class="hover:text-primary transition-colors cursor-pointer">Eduardo Wolfe-Alegria</div>
           </div>
         </div>
         <div>
-          <h3 className="font-bold mb-3 tracking-wider text-xs opacity-60">F</h3>
-          <div className="space-y-2">
-            <div className="hover:text-primary transition-colors cursor-pointer">Future Collaborators</div>
+          <h3 class="font-bold mb-3 tracking-wider text-xs opacity-60">F</h3>
+          <div class="space-y-2">
+            <div class="hover:text-primary transition-colors cursor-pointer">Future Collaborators</div>
           </div>
         </div>
       </div>
@@ -182,7 +182,7 @@ import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
     */}
 
     {/* Footer */}
-    <footer className="mt-auto flex h-12 items-center justify-center border-t border-border px-4 text-xs sm:text-sm">
+    <footer class="mt-auto flex h-12 items-center justify-center border-t border-border px-4 text-xs sm:text-sm">
       <span>© {new Date().getFullYear()} Tiankai Xie. All rights reserved.</span>
     </footer>
 
