@@ -5,6 +5,21 @@ import { githubReleasesLoader } from 'astro-loader-github-releases'
 import { githubPrsLoader } from 'astro-loader-github-prs'
 import { pageSchema, projectsSchema, streamsSchema } from './schema'
 
+const githubToken = import.meta.env.GITHUB_TOKEN
+
+const disabledGithubLoader = (
+  name: string,
+  schema: ReturnType<
+    typeof githubReleasesLoader | typeof githubPrsLoader
+  >['schema']
+) => ({
+  name,
+  schema,
+  load: async ({ store }: { store: { clear: () => void } }) => {
+    store.clear()
+  },
+})
+
 const pages = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/pages' }),
   schema: pageSchema,
@@ -58,28 +73,38 @@ const feeds = defineCollection({
   }),
 })
 
+const githubReleases = githubReleasesLoader({
+  loadMode: 'repoList',
+  modeConfig: {
+    repos: [
+      'withastro/astro',
+      'withastro/starlight',
+      'lin-stephanie/astro-loaders',
+      'lin-stephanie/astro-antfustyle-theme',
+    ],
+    monthsBack: 3,
+    entryReturnType: 'byRelease',
+    githubToken,
+  },
+})
+
 const releases = defineCollection({
-  loader: githubReleasesLoader({
-    loadMode: 'repoList',
-    modeConfig: {
-      repos: [
-        'withastro/astro',
-        'withastro/starlight',
-        'lin-stephanie/astro-loaders',
-        'lin-stephanie/astro-antfustyle-theme',
-      ],
-      monthsBack: 3,
-      entryReturnType: 'byRelease',
-    },
-  }),
+  loader: githubToken
+    ? githubReleases
+    : disabledGithubLoader('github-releases-disabled', githubReleases.schema),
+})
+
+const githubPrs = githubPrsLoader({
+  search:
+    'repo:withastro/astro repo:withastro/starlight repo:lin-stephanie/astro-antfustyle-theme',
+  monthsBack: 2,
+  githubToken,
 })
 
 const prs = defineCollection({
-  loader: githubPrsLoader({
-    search:
-      'repo:withastro/astro repo:withastro/starlight repo:lin-stephanie/astro-antfustyle-theme',
-    monthsBack: 2,
-  }),
+  loader: githubToken
+    ? githubPrs
+    : disabledGithubLoader('github-prs-disabled', githubPrs.schema),
 })
 
 const home = defineCollection({

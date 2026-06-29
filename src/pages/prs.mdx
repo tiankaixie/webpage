@@ -11,6 +11,8 @@ import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
 import GithubView from '~/components/views/GithubView.astro'
 
+export const githubActivityEnabled = !!import.meta.env.GITHUB_TOKEN
+
 <BaseLayout
   title={frontmatter.title}
   description={frontmatter.description}
@@ -24,6 +26,17 @@ import GithubView from '~/components/views/GithubView.astro'
       <p class="!mt-[-1rem] italic opacity-50"
       >Example: Displaying GitHub pull requests using <a href="https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-prs" target="_blank">astro-loader-github-prs</a></p>
     </Fragment>
-    <GithubView slot="github" collectionType="prs" />
+    {githubActivityEnabled ? (
+      <GithubView slot="github" collectionType="prs" />
+    ) : (
+      <div slot="github" class="mt-16 border border-[var(--c-border)] p-6 text-center font-mono">
+        <p class="m-0 text-sm text-[var(--c-text)]">
+          GitHub pull requests are an optional build-time integration.
+        </p>
+        <p class="mb-0 mt-3 text-xs text-[var(--c-text-light)]">
+          Set <code>GITHUB_TOKEN</code> during build to fetch pull request data.
+        </p>
+      </div>
+    )}
   </StandardLayout>
 </BaseLayout>
