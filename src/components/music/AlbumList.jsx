@@ -122,35 +122,49 @@ export default function AlbumList({
           </div>
         ) : (
           filteredAlbums.map((album) => (
-            <div
+            <button
               key={album.id}
+              type="button"
+              aria-pressed={selectedAlbum?.id === album.id}
               className="hover:bg-[var(--c-ui-bg-hover)]"
               onClick={() => onSelectAlbum(album)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault()
+                  onSelectAlbum(album)
+                }
+              }}
               style={{
                 cursor: 'pointer',
+                width: '100%',
+                border: 0,
                 padding: '8px',
                 backgroundColor:
                   selectedAlbum?.id === album.id
                     ? 'var(--c-ui-bg-hover)'
                     : 'transparent',
+                color: 'inherit',
                 display: 'flex',
                 gap: '12px',
                 alignItems: 'center',
+                textAlign: 'left',
                 transition: 'background-color 0.2s ease',
+                fontFamily: 'inherit',
               }}
             >
               <img
                 src={album.imageUrl}
-                alt={album.title}
+                alt={`${album.albumName} cover`}
                 style={{
                   width: '40px',
                   height: '40px',
                   objectFit: 'cover',
                 }}
               />
-              <div>
-                <h3
+              <span>
+                <span
                   style={{
+                    display: 'block',
                     margin: '0 0 2px 0',
                     fontSize: '14px',
                     fontWeight: '400',
@@ -158,27 +172,29 @@ export default function AlbumList({
                   }}
                 >
                   {album.songTitle}
-                </h3>
-                <p
+                </span>
+                <span
                   style={{
+                    display: 'block',
                     margin: '0 0 2px 0',
                     fontSize: '12px',
                     color: 'var(--c-text-light)',
                   }}
                 >
                   from "{album.albumName}"
-                </p>
-                <p
+                </span>
+                <span
                   style={{
+                    display: 'block',
                     margin: 0,
                     fontSize: '12px',
                     color: 'var(--c-text-light)',
                   }}
                 >
                   {album.artist}
-                </p>
-              </div>
-            </div>
+                </span>
+              </span>
+            </button>
           ))
         )}
       </div>
