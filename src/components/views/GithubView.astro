@@ -5,7 +5,6 @@ import Link from '~/components/base/Link.astro'
 import GithubItem from '~/components/views/GithubItem.astro'
 import { UI } from '~/config'
 import { formatDate } from '~/utils/datetime'
-import { getUrl } from '~/utils/common'
 import {
   matchLogo,
   extractPackageName,
@@ -175,9 +174,10 @@ if (collectionType === 'prs') {
     See
     <Link
       class="!opacity-100"
-      href={getUrl('/blog/customizing-github-activity-pages/')}
+      href="https://github.com/lin-stephanie/astro-loaders"
+      external={true}
     >
-      Customizing GitHub Activity Pages
+      astro-loaders documentation
     </Link>
     to configure your own
   </p>

@@ -1,6 +1,6 @@
 ---
-title: AstroEco is Contributing..
-description: 'Example: Displaying GitHub pull requests using astro-loader-github-prs'
+title: GitHub Pull Requests
+description: 'Optional build-time GitHub pull request activity feed.'
 subtitle: ''
 bgType: plum
 toc: false
@@ -21,10 +21,9 @@ export const githubActivityEnabled = !!import.meta.env.GITHUB_TOKEN
 >
   <StandardLayout isCentered={true} isWideMargin={true}>
     <Fragment slot="head">
-      <h1 class="ml-12 max-sm:ml-0"
-      >AstroEco is <span class="animate-pulse">Contributing...</span></h1>
+      <h1 class="ml-12 max-sm:ml-0">GitHub Pull Requests</h1>
       <p class="!mt-[-1rem] italic opacity-50"
-      >Example: Displaying GitHub pull requests using <a href="https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-prs" target="_blank">astro-loader-github-prs</a></p>
+      >Optional build-time activity feed using <a href="https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-prs" target="_blank">astro-loader-github-prs</a></p>
     </Fragment>
     {githubActivityEnabled ? (
       <GithubView slot="github" collectionType="prs" />

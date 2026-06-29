@@ -1,6 +1,6 @@
 ---
-title: AstroEco is Releasing...
-description: 'Example: Displaying GitHub releases using astro-loader-github-releases'
+title: GitHub Releases
+description: 'Optional build-time GitHub releases activity feed.'
 subtitle: ''
 bgType: plum
 toc: false
@@ -21,10 +21,9 @@ export const githubActivityEnabled = !!import.meta.env.GITHUB_TOKEN
 >
   <StandardLayout isCentered={true} isWideMargin={true}>
     <Fragment slot="head">
-      <h1 class="ml-12 max-sm:ml-0"
-      >AstroEco is <span class="animate-pulse">Releasing...</span></h1>
+      <h1 class="ml-12 max-sm:ml-0">GitHub Releases</h1>
       <p class="!mt-[-1rem] italic opacity-50"
-      >Example: Displaying GitHub releases using <a href="https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-releases" target="_blank">astro-loader-github-releases</a></p>
+      >Optional build-time activity feed using <a href="https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-releases" target="_blank">astro-loader-github-releases</a></p>
     </Fragment>
     {githubActivityEnabled ? (
       <GithubView slot="github" collectionType="releases" />
