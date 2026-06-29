@@ -3,6 +3,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
 import Toc from '~/components/toc/Toc.astro'
 import Warning from '~/components/base/Warning.astro'
+import ShareLink from '~/components/widgets/ShareLink.astro'
 import { formatDate } from '~/utils/datetime'
 import { getFilteredPosts } from '~/utils/post'
 import { FEATURES } from '~/config'
@@ -25,7 +26,8 @@ export async function getStaticPaths() {
 const { post } = Astro.props as Props
 const { data: frontmatter } = post
 const { Content, headings, remarkPluginFrontmatter } = await post.render()
-const { toc } = FEATURES
+const { share, toc } = FEATURES
+const shareEnabled = Array.isArray(share) && share[0] && frontmatter.share
 
 const pubDate = frontmatter.pubDate.toISOString()
 const lastModDate = frontmatter.lastModDate
@@ -88,6 +90,13 @@ frontmatter to <code>false</code> or remove it to publish the post.`
         >
           <Content />
         </article>
+        {
+          shareEnabled && (
+            <div class="mt-6 border-t border-gray-200 pt-3 font-mono text-sm dark:border-gray-800">
+              <ShareLink config={share[1]} />
+            </div>
+          )
+        }
       </div>
     </div>
   </StandardLayout>
