@@ -13,6 +13,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# local QA evidence
+.gstack/qa-reports/
+
 # environment variables
 .env
 .env.production
